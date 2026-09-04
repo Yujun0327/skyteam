@@ -9,7 +9,7 @@ import * as CANNON from 'cannon-es'
 import { Quaternion } from 'three'
 import { mulberry32 } from '../engine/rng'
 import { flatness, topFaceOf } from './facemap'
-import { PAD, TRAY, addPad, makeDie, makeMaterials, makeWorld } from './physics'
+import { PAD, addPad, makeDie, makeMaterials, makeWorld } from './physics'
 
 export interface DieLaunch {
   position: [number, number, number]
@@ -196,7 +196,3 @@ export function simulateRoll(launches: DieLaunch[], nudgeSeed = 1): RollRecordin
   }
 }
 
-/** Center of keep-tray well i (held dice never enter the cup). */
-export function slotPosition(i: number): [number, number, number] {
-  return [(i - 2) * TRAY.pitch, TRAY.dieY, TRAY.z]
-}

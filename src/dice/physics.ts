@@ -1,6 +1,7 @@
 /**
  * cannon-es world factory for both the live rattle sim (dice inside a
- * shaking kinematic cup) and the headless throw sim. Pure JS — this whole
+ * shaking kinematic cup) and the headless throw sim. The pad is the dice
+ * shelf behind the player's screen; four dice per seat. Pure JS — this whole
  * module runs in vitest's node environment.
  *
  * Units: one die edge = 1. Gravity is tuned (not 9.82) so the motion reads
@@ -9,26 +10,14 @@
 import * as CANNON from 'cannon-es'
 
 export const DIE_SIZE = 1
-export const DICE_COUNT = 5
+export const DICE_COUNT = 4
 
 /**
  * The rolling pad: a walled rectangle the dice must stay inside. The visual
  * rim is low; the physics walls extend far higher so no throw can escape.
  */
-export const PAD = { halfW: 7.2, halfD: 5.0, wallH: 12 }
+export const PAD = { halfW: 5.4, halfD: 3.6, wallH: 12 }
 
-/**
- * The keep tray behind the pad: five felt-lined wells that held dice fly
- * into. Display-only — held dice never simulate.
- */
-export const TRAY = {
-  z: -(PAD.halfD + 2.6),
-  pitch: 2.0,
-  well: 1.7,
-  baseH: 0.5,
-  /** resting center height of a die sitting in a well */
-  dieY: 0.5 + DIE_SIZE / 2,
-}
 
 export const TUNING = {
   gravity: -55,

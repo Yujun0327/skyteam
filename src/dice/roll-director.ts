@@ -2,6 +2,8 @@
  * The ritual state machine. Owns the live rattle sim (real dice colliding
  * inside a kinematic cup that tracks the player's hand), the committed
  * throw (headless sim + face-forced playback), and the reveal choreography.
+ * `hidden` dice are the ones already placed on the panel: they are not on
+ * the shelf at all.
  *
  * Engine-ignorant by design: callers hand it the authoritative faces; it
  * hands back "the dice have finished showing them". Input adapters feed
@@ -12,10 +14,9 @@ import * as CANNON from 'cannon-es'
 import { Quaternion, Vector3 } from 'three'
 import type { Mesh, MeshStandardMaterial } from 'three'
 import { mulberry32 } from '../engine/rng'
-import { nearestFlat } from './facemap'
 import { CUP, DIE_SIZE, PAD, makeCup, makeDie, makeMaterials, makeWorld, onImpact } from './physics'
 import { Playback } from './playback'
-import { seededLaunches, simulateRoll, slotPosition } from './simulate'
+import { seededLaunches, simulateRoll } from './simulate'
 import type { DieLaunch } from './simulate'
 import type { Stage } from './scene'
 
@@ -66,7 +67,7 @@ export class RollDirector {
   private liveDice: CANNON.Body[] = []
   private liveCup: ReturnType<typeof makeCup> | null = null
   private thrownIdx: number[] = []
-  private heldMask: boolean[] = [false, false, false, false, false]
+  private heldMask: boolean[] = []
   private rattleCooldown = 0
   private cupPose = { x: 0, tiltX: 0, tiltZ: 0 }
 
@@ -80,13 +81,12 @@ export class RollDirector {
   private cupToss = -1 // >=0: animating the cup throw flourish
 
   private tweens: Tween[] = []
-  private lastShownFaces: number[] = [0, 0, 0, 0, 0]
-  private fieldPose: Record<number, { pos: Vector3; quat: Quaternion }> = {}
-  /** Which dice may be picked up for keeping right now (set by the UI). */
-  private pickable: boolean[] = [false, false, false, false, false]
+  private lastShownFaces: number[] = []
+  /** Which dice glow as selectable / selected (set by the UI). */
+  private highlight: number[] = []
 
-  setPickable(mask: boolean[]): void {
-    this.pickable = [...mask]
+  setHighlight(mask: number[]): void {
+    this.highlight = [...mask]
   }
 
   constructor(stage: Stage, hooks: DirectorHooks = {}) {
@@ -117,7 +117,7 @@ export class RollDirector {
     // hand, not on the felt
     const rolled = faces.map((f, i) => ({ f, i })).filter(({ f, i }) => !held[i] && f > 0)
     faces.forEach((f, i) => {
-      this.stage.dice[i].visible = held[i] || f > 0
+      this.stage.dice[i].visible = !held[i] && f > 0
     })
     if (rolled.length > 0) {
       const seed = faces.reduce((a, f, i) => a * 7 + f + i, 3) >>> 0
@@ -126,53 +126,28 @@ export class RollDirector {
       const pb = new Playback(rec, rolled.map(({ f }) => f))
       pb.finish(rolled.map(({ i }) => this.stage.dice[i]))
     }
-    faces.forEach((f, i) => {
-      if (held[i]) this.placeInSlot(i, f || 1, false)
-    })
     this.setPhase('idle')
   }
 
-  /** Animate a die into (or back out of) its keep-tray well. */
-  setHeld(i: number, held: boolean): void {
-    this.heldMask[i] = held
+  /** A die was placed on the panel: it lifts off the shelf and vanishes. */
+  hideDie(i: number): void {
+    this.heldMask[i] = true
     const die = this.stage.dice[i]
-    if (held) {
-      // remember where it sat on the felt so un-keeping can return it
-      this.fieldPose[i] = { pos: die.position.clone(), quat: die.quaternion.clone() }
-      this.placeInSlot(i, this.lastShownFaces[i] || 1, true)
-    } else {
-      const back = this.fieldPose[i]
-      const to = back?.pos ?? new Vector3((i - 2) * 1.5, DIE_SIZE / 2, 1.5)
-      const qTo = back?.quat ?? nearestFlat(die.quaternion.clone())
-      this.flyTo(die, to, qTo)
-    }
-  }
-
-  private placeInSlot(i: number, face: number, animate: boolean): void {
-    const die = this.stage.dice[i]
-    const [x, y, z] = slotPosition(i)
-    const to = new Vector3(x, y, z)
-    const qTo = nearestFlat(die.quaternion.clone())
-    if (!animate) {
-      die.position.copy(to)
-      die.quaternion.copy(qTo)
-      return
-    }
-    this.flyTo(die, to, qTo)
-  }
-
-  private flyTo(die: Mesh, to: Vector3, qTo: Quaternion): void {
+    if (!die.visible) return
+    const to = die.position.clone().add(new Vector3(0, 3.2, -2.5))
     this.tweens = this.tweens.filter((tw) => tw.mesh !== die)
     this.tweens.push({
       mesh: die,
       from: die.position.clone(),
       to,
       qFrom: die.quaternion.clone(),
-      qTo,
+      qTo: die.quaternion.clone(),
       t: 0,
-      dur: 0.42,
-      arc: 1.7,
-      onLand: () => this.hooks.onImpact?.(0.25),
+      dur: 0.32,
+      arc: 0.4,
+      onLand: () => {
+        die.visible = false
+      },
     })
   }
 
@@ -198,7 +173,7 @@ export class RollDirector {
 
   /**
    * Commit the throw. `faces` are the engine's authoritative results for ALL
-   * five dice (held ones keep their old values and stay put); `dir` is the
+   * dice (hidden ones are skipped); `dir` is the
    * horizontal throw direction, `speed` 0..1 the gesture energy.
    */
   throwDice(faces: number[], dir: [number, number], speed: number): void {
@@ -448,28 +423,13 @@ export class RollDirector {
     }
   }
 
-  /** Pulse pickable dice with a brass glow and float a KEEP tag over them. */
+  /** Glow dice the UI marks: 1 = selectable, 2 = selected. */
   private updateAffordances(): void {
     const idle = this.phase === 'idle'
     this.stage.dice.forEach((die, i) => {
-      const pickable = idle && this.pickable[i] && !this.heldMask[i] && die.visible
-      const sign = this.stage.keepSigns[i]
-      sign.visible = pickable
-      if (pickable) {
-        sign.position.set(
-          die.position.x,
-          die.position.y + 1.55 + Math.sin(this.time * 2.6 + i) * 0.09,
-          die.position.z,
-        )
-      }
-      const glow = pickable
-        ? 0.22 + 0.12 * Math.sin(this.time * 3.2 + i * 1.3)
-        : idle && this.heldMask[i]
-          ? 0.1 // kept dice keep a steady ember so they read as "banked"
-          : 0
-      for (const m of die.material as MeshStandardMaterial[]) {
-        m.emissive.setRGB(glow * 0.79, glow * 0.63, glow * 0.15)
-      }
+      const level = idle && die.visible ? (this.highlight[i] ?? 0) : 0
+      const glow = level === 2 ? 0.55 + 0.15 * Math.sin(this.time * 5) : level === 1 ? 0.14 + 0.06 * Math.sin(this.time * 3 + i) : 0
+      for (const m of die.material as MeshStandardMaterial[]) m.emissive.setRGB(glow, glow * 0.85, glow * 0.5)
     })
   }
 
