@@ -137,8 +137,15 @@
     director?.setHighlight([...highlight])
   })
 
+  // the shelf changes seat (solo table): recolour and re-lay whatever that seat holds
+  let prevColor = untrack(() => color)
   $effect(() => {
-    stage?.setDiceColor(color)
+    const c = color
+    stage?.setDiceColor(c)
+    if (c !== prevColor && director && phase === 'idle') {
+      untrack(() => director!.showFaces([...faces], [...hidden]))
+    }
+    prevColor = c
   })
 
   // placed dice lift off the shelf; a new round's faces re-lay the shelf
