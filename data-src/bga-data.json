@@ -1,0 +1,3200 @@
+{
+ "tracks": {
+  "1": {
+   "type": "1",
+   "category": "green",
+   "name": "\"YUL\" Montreal-Trudeau",
+   "size": 7,
+   "spaces": {
+    "1": [],
+    "2": [],
+    "3": {
+     "plane": 1
+    },
+    "4": {
+     "plane": 2
+    },
+    "5": {
+     "plane": 1
+    },
+    "6": {
+     "plane": 3
+    },
+    "7": {
+     "plane": 2
+    }
+   }
+  },
+  "2": {
+   "type": "2",
+   "category": "green",
+   "name": "\"HND\" Haneda",
+   "size": 8,
+   "spaces": {
+    "1": {
+     "traffic": 2
+    },
+    "2": {
+     "plane": 1
+    },
+    "3": {
+     "allowedAxis": [
+      -1,
+      0
+     ],
+     "plane": 1
+    },
+    "4": {
+     "plane": 2
+    },
+    "5": {
+     "allowedAxis": [
+      -2,
+      -1
+     ],
+     "plane": 1
+    },
+    "6": {
+     "allowedAxis": [
+      -2,
+      -1,
+      0
+     ]
+    },
+    "7": {
+     "plane": 2
+    },
+    "8": {
+     "plane": 1
+    }
+   }
+  },
+  "3": {
+   "type": "3",
+   "category": "yellow",
+   "name": "\"KUL\" Kuala Lumpur",
+   "size": 8,
+   "spaces": {
+    "1": {
+     "traffic": 2
+    },
+    "2": {
+     "allowedAxis": [
+      1,
+      2
+     ]
+    },
+    "3": {
+     "plane": 1
+    },
+    "4": {
+     "plane": 1,
+     "allowedAxis": [
+      0,
+      1
+     ],
+     "traffic": 1
+    },
+    "5": {
+     "allowedAxis": [
+      1,
+      2
+     ]
+    },
+    "6": {
+     "plane": 1
+    },
+    "7": {
+     "plane": 1,
+     "allowedAxis": [
+      1,
+      2
+     ]
+    },
+    "8": {
+     "plane": 1
+    }
+   }
+  },
+  "4": {
+   "type": "4",
+   "category": "red",
+   "name": "\"TGU\" Toncontin",
+   "size": 5,
+   "spaces": {
+    "1": {
+     "traffic": 3
+    },
+    "2": {
+     "plane": 1,
+     "allowedAxis": [
+      -2,
+      -1
+     ]
+    },
+    "3": {
+     "plane": 1,
+     "traffic": 2,
+     "allowedAxis": [
+      -1,
+      0
+     ]
+    },
+    "4": {
+     "plane": 1,
+     "allowedAxis": [
+      -2,
+      -1
+     ]
+    },
+    "5": {
+     "plane": 2
+    }
+   }
+  },
+  "5": {
+   "type": "5",
+   "category": "black",
+   "name": "\"KUL\" Kuala Lumpur",
+   "size": 8,
+   "spaces": {
+    "1": {
+     "traffic": 3
+    },
+    "2": {
+     "allowedAxis": [
+      0,
+      1
+     ]
+    },
+    "3": {
+     "plane": 1,
+     "traffic": 1
+    },
+    "4": {
+     "allowedAxis": [
+      -2
+     ]
+    },
+    "5": {
+     "plane": 1,
+     "allowedAxis": [
+      -1,
+      0
+     ]
+    },
+    "6": {
+     "plane": 1,
+     "allowedAxis": [
+      0,
+      1
+     ],
+     "traffic": 1
+    },
+    "7": {
+     "plane": 1,
+     "allowedAxis": [
+      1,
+      2
+     ]
+    },
+    "8": {
+     "plane": 1
+    }
+   }
+  },
+  "6": {
+   "type": "6",
+   "category": "yellow",
+   "name": "\"TGU\" Toncontin",
+   "size": 5,
+   "spaces": {
+    "1": {
+     "traffic": 3
+    },
+    "2": {
+     "plane": 1,
+     "allowedAxis": [
+      -2,
+      -1
+     ]
+    },
+    "3": {
+     "plane": 1,
+     "allowedAxis": [
+      -1,
+      0
+     ]
+    },
+    "4": {
+     "plane": 1,
+     "allowedAxis": [
+      -2,
+      -1
+     ]
+    },
+    "5": {
+     "plane": 1
+    }
+   }
+  },
+  "7": {
+   "type": "7",
+   "category": "red",
+   "name": "\"HND\" Haneda",
+   "size": 8,
+   "spaces": {
+    "1": {
+     "plane": 1,
+     "traffic": 3
+    },
+    "2": {
+     "allowedAxis": [
+      -1,
+      0
+     ]
+    },
+    "3": {
+     "plane": 1
+    },
+    "4": {
+     "plane": 1,
+     "allowedAxis": [
+      -2,
+      -1
+     ],
+     "traffic": 1
+    },
+    "5": {
+     "plane": 1,
+     "allowedAxis": [
+      -1,
+      0
+     ],
+     "traffic": 1
+    },
+    "6": {
+     "plane": 2,
+     "traffic": 1
+    },
+    "7": {
+     "plane": 1,
+     "allowedAxis": [
+      -2,
+      -1
+     ]
+    },
+    "8": {
+     "plane": 1
+    }
+   }
+  },
+  "8": {
+   "type": "8",
+   "category": "black",
+   "name": "\"LGA\" LaGuardia",
+   "size": 7,
+   "spaces": {
+    "1": {
+     "allowedAxis": [
+      0,
+      1,
+      2
+     ]
+    },
+    "2": [],
+    "3": {
+     "allowedAxis": [
+      1,
+      2
+     ],
+     "traffic": 1
+    },
+    "4": [],
+    "5": {
+     "plane": 1,
+     "allowedAxis": [
+      -2,
+      -1
+     ],
+     "traffic": 1
+    },
+    "6": {
+     "plane": 1
+    },
+    "7": []
+   }
+  },
+  "9": {
+   "type": "9",
+   "category": "yellow",
+   "name": "\"LGA\" LaGuardia",
+   "size": 7,
+   "spaces": {
+    "1": {
+     "traffic": 1
+    },
+    "2": {
+     "allowedAxis": [
+      0,
+      1,
+      2
+     ]
+    },
+    "3": {
+     "traffic": 1
+    },
+    "4": {
+     "plane": 1,
+     "allowedAxis": [
+      -2,
+      -1,
+      0
+     ]
+    },
+    "5": {
+     "plane": 2,
+     "traffic": 1
+    },
+    "6": {
+     "plane": 1
+    },
+    "7": {
+     "plane": 1
+    }
+   }
+  },
+  "10": {
+   "type": "10",
+   "category": "black",
+   "name": "\"DUS\" Düsseldorf",
+   "size": 8,
+   "spaces": {
+    "1": {
+     "plane": 1,
+     "traffic": 2
+    },
+    "2": {
+     "allowedAxis": [
+      0
+     ]
+    },
+    "3": {
+     "traffic": 1
+    },
+    "4": {
+     "plane": 1,
+     "allowedAxis": [
+      -2,
+      -1
+     ],
+     "traffic": 2
+    },
+    "5": {
+     "plane": 2
+    },
+    "6": {
+     "traffic": 1,
+     "plane": 1,
+     "allowedAxis": [
+      1,
+      2
+     ]
+    },
+    "7": {
+     "plane": 3
+    },
+    "8": {
+     "plane": 2
+    }
+   }
+  },
+  "11": {
+   "type": "11",
+   "category": "yellow",
+   "name": "\"DUS\" Düsseldorf",
+   "size": 8,
+   "spaces": {
+    "1": {
+     "traffic": 3
+    },
+    "2": {
+     "plane": 1
+    },
+    "3": {
+     "plane": 1
+    },
+    "4": {
+     "plane": 2,
+     "allowedAxis": [
+      -1,
+      0,
+      1
+     ]
+    },
+    "5": {
+     "plane": 1
+    },
+    "6": {
+     "plane": 2,
+     "allowedAxis": [
+      -1,
+      0,
+      1
+     ],
+     "traffic": 2
+    },
+    "7": {
+     "plane": 1
+    },
+    "8": {
+     "plane": 1
+    }
+   }
+  },
+  "12": {
+   "type": "12",
+   "category": "red",
+   "name": "\"CDG\" Paris-Charles de Gaulle",
+   "size": 8,
+   "spaces": {
+    "1": {
+     "plane": 1,
+     "traffic": 2
+    },
+    "2": [],
+    "3": [],
+    "4": {
+     "traffic": 1,
+     "allowedAxis": [
+      -2,
+      -1
+     ]
+    },
+    "5": {
+     "plane": 1
+    },
+    "6": {
+     "plane": 1,
+     "allowedAxis": [
+      1,
+      2
+     ],
+     "traffic": 1
+    },
+    "7": {
+     "plane": 2
+    },
+    "8": {
+     "plane": 1
+    }
+   }
+  },
+  "13": {
+   "type": "13",
+   "category": "yellow",
+   "name": "\"CDG\" Paris-Charles de Gaulle",
+   "size": 8,
+   "spaces": {
+    "1": {
+     "traffic": 3
+    },
+    "2": {
+     "plane": 1
+    },
+    "3": [],
+    "4": {
+     "traffic": 1
+    },
+    "5": {
+     "plane": 2,
+     "traffic": 1
+    },
+    "6": {
+     "plane": 2,
+     "traffic": 1
+    },
+    "7": {
+     "plane": 1
+    },
+    "8": {
+     "plane": 2
+    }
+   }
+  },
+  "14": {
+   "type": "14",
+   "category": "yellow",
+   "name": "\"TER\" Lajes, Açores",
+   "size": 7,
+   "spaces": {
+    "1": {
+     "traffic": 3,
+     "allowedAxis": [
+      -2,
+      -1
+     ]
+    },
+    "2": {
+     "allowedAxis": [
+      0,
+      1,
+      2
+     ]
+    },
+    "3": {
+     "allowedAxis": [
+      -2,
+      -1
+     ]
+    },
+    "4": {
+     "allowedAxis": [
+      1,
+      2
+     ]
+    },
+    "5": {
+     "plane": 1,
+     "allowedAxis": [
+      -2,
+      -1
+     ]
+    },
+    "6": {
+     "plane": 1,
+     "allowedAxis": [
+      1,
+      2
+     ]
+    },
+    "7": {
+     "plane": 1
+    }
+   }
+  },
+  "15": {
+   "type": "15",
+   "category": "black",
+   "name": "\"TER\" Lajes, Açores",
+   "size": 7,
+   "spaces": {
+    "1": {
+     "traffic": 3,
+     "allowedAxis": [
+      -2,
+      -1
+     ]
+    },
+    "2": {
+     "allowedAxis": [
+      1,
+      2
+     ]
+    },
+    "3": {
+     "allowedAxis": [
+      -2,
+      -1
+     ]
+    },
+    "4": {
+     "plane": 1,
+     "allowedAxis": [
+      1,
+      2
+     ]
+    },
+    "5": {
+     "plane": 1,
+     "allowedAxis": [
+      -2,
+      -1
+     ]
+    },
+    "6": {
+     "plane": 1,
+     "allowedAxis": [
+      1,
+      2
+     ]
+    },
+    "7": {
+     "plane": 1
+    }
+   }
+  },
+  "16": {
+   "type": "16",
+   "category": "black",
+   "name": "\"NZIR\" Ice Runway",
+   "size": 8,
+   "spaces": {
+    "1": {
+     "traffic": 2
+    },
+    "2": {
+     "plane": 1
+    },
+    "3": {
+     "allowedAxis": [
+      -1,
+      0
+     ]
+    },
+    "4": [],
+    "5": {
+     "allowedAxis": [
+      1,
+      2
+     ]
+    },
+    "6": [],
+    "7": {
+     "allowedAxis": [
+      -1,
+      0
+     ]
+    },
+    "8": []
+   }
+  },
+  "17": {
+   "type": "17",
+   "category": "red",
+   "name": "\"NZIR\" Ice Runway",
+   "size": 8,
+   "spaces": {
+    "1": {
+     "traffic": 3
+    },
+    "2": {
+     "allowedAxis": [
+      -2,
+      -1
+     ]
+    },
+    "3": [],
+    "4": {
+     "plane": 1
+    },
+    "5": {
+     "plane": 1,
+     "allowedAxis": [
+      0,
+      1
+     ]
+    },
+    "6": {
+     "plane": 1
+    },
+    "7": [],
+    "8": []
+   }
+  },
+  "18": {
+   "type": "18",
+   "category": "yellow",
+   "name": "\"BUD\" Budapest Liszt Ferenc",
+   "size": 6,
+   "spaces": {
+    "1": {
+     "traffic": 3
+    },
+    "2": {
+     "plane": 1
+    },
+    "3": {
+     "plane": 1,
+     "allowedAxis": [
+      0,
+      1
+     ]
+    },
+    "4": {
+     "traffic": 1,
+     "plane": 2
+    },
+    "5": {
+     "plane": 1,
+     "allowedAxis": [
+      -2,
+      -1
+     ]
+    },
+    "6": {
+     "plane": 2
+    }
+   }
+  },
+  "19": {
+   "type": "19",
+   "category": "red",
+   "name": "\"BUD\" Budapest Liszt Ferenc",
+   "size": 6,
+   "spaces": {
+    "1": {
+     "plane": 1,
+     "traffic": 4
+    },
+    "2": {
+     "plane": 1
+    },
+    "3": {
+     "traffic": 1,
+     "plane": 1,
+     "allowedAxis": [
+      0,
+      1
+     ]
+    },
+    "4": {
+     "traffic": 1,
+     "plane": 1,
+     "allowedAxis": [
+      1,
+      2
+     ]
+    },
+    "5": {
+     "plane": 1,
+     "allowedAxis": [
+      -2,
+      -1
+     ]
+    },
+    "6": {
+     "plane": 1
+    }
+   }
+  },
+  "20": {
+   "type": "20",
+   "category": "red",
+   "name": "\"BLQ\" Guglielmo Marconi",
+   "size": 6,
+   "spaces": {
+    "1": {
+     "plane": 1,
+     "traffic": 3
+    },
+    "2": {
+     "plane": 1,
+     "allowedAxis": [
+      0
+     ]
+    },
+    "3": {
+     "plane": 2
+    },
+    "4": {
+     "plane": 1,
+     "allowedAxis": [
+      0
+     ]
+    },
+    "5": {
+     "plane": 1
+    },
+    "6": {
+     "plane": 2
+    }
+   }
+  },
+  "21": {
+   "type": "21",
+   "category": "green",
+   "name": "\"BLQ\" Guglielmo Marconi",
+   "size": 6,
+   "spaces": {
+    "1": {
+     "plane": 1,
+     "traffic": 3
+    },
+    "2": {
+     "plane": 1,
+     "allowedAxis": [
+      -1,
+      0
+     ]
+    },
+    "3": {
+     "plane": 1,
+     "traffic": 1
+    },
+    "4": {
+     "plane": 1,
+     "allowedAxis": [
+      0,
+      1
+     ]
+    },
+    "5": {
+     "plane": 2
+    },
+    "6": {
+     "plane": 2
+    }
+   }
+  },
+  "22": {
+   "type": "22",
+   "category": "green",
+   "name": "\"ATL\" Hartsfield-Jackson",
+   "size": 8,
+   "spaces": {
+    "1": {
+     "traffic": 4
+    },
+    "2": [],
+    "3": {
+     "traffic": 1
+    },
+    "4": [],
+    "5": {
+     "traffic": 1,
+     "plane": 1
+    },
+    "6": {
+     "traffic": 1,
+     "plane": 2
+    },
+    "7": {
+     "plane": 1
+    },
+    "8": {
+     "plane": 2
+    }
+   }
+  },
+  "23": {
+   "type": "23",
+   "category": "yellow",
+   "name": "\"ATL\" Hartsfield-Jackson",
+   "size": 8,
+   "spaces": {
+    "1": {
+     "traffic": 1
+    },
+    "2": {
+     "traffic": 1,
+     "plane": 1
+    },
+    "3": {
+     "allowedAxis": [
+      -1,
+      0,
+      1
+     ]
+    },
+    "4": {
+     "traffic": 2,
+     "plane": 2
+    },
+    "5": {
+     "traffic": 1,
+     "plane": 2
+    },
+    "6": {
+     "plane": 1
+    },
+    "7": {
+     "allowedAxis": [
+      1,
+      2
+     ],
+     "plane": 3
+    },
+    "8": {
+     "plane": 1
+    }
+   }
+  },
+  "24": {
+   "type": "24",
+   "category": "yellow",
+   "name": "\"GIG\" Galeão",
+   "size": 7,
+   "spaces": {
+    "1": {
+     "traffic": 2
+    },
+    "2": [],
+    "3": {
+     "plane": 2
+    },
+    "4": {
+     "traffic": 1,
+     "plane": 1
+    },
+    "5": {
+     "traffic": 1,
+     "plane": 2
+    },
+    "6": {
+     "plane": 3
+    },
+    "7": {
+     "plane": 1
+    }
+   }
+  },
+  "25": {
+   "type": "25",
+   "category": "red",
+   "name": "\"GIG\" Galeão",
+   "size": 7,
+   "spaces": {
+    "1": {
+     "traffic": 3
+    },
+    "2": {
+     "plane": 1
+    },
+    "3": {
+     "traffic": 1,
+     "plane": 2
+    },
+    "4": {
+     "plane": 2
+    },
+    "5": {
+     "traffic": 1,
+     "plane": 1
+    },
+    "6": {
+     "plane": 1
+    },
+    "7": {
+     "plane": 2
+    }
+   }
+  },
+  "26": {
+   "type": "26",
+   "category": "black",
+   "name": "\"PBH\" Paro",
+   "size": 6,
+   "spaces": {
+    "1": {
+     "plane": 1,
+     "traffic": 3
+    },
+    "2": [],
+    "3": {
+     "allowedAxis": [
+      -2,
+      -1
+     ],
+     "traffic": 1,
+     "plane": 1
+    },
+    "4": {
+     "allowedAxis": [
+      -2,
+      -1
+     ],
+     "traffic": 1,
+     "plane": 1
+    },
+    "5": {
+     "allowedAxis": [
+      2
+     ],
+     "traffic": 1,
+     "plane": 1
+    },
+    "6": {
+     "plane": 1
+    }
+   }
+  },
+  "27": {
+   "type": "27",
+   "category": "red",
+   "name": "\"PBH\" Paro",
+   "size": 6,
+   "spaces": {
+    "1": {
+     "traffic": 3
+    },
+    "2": {
+     "plane": 1
+    },
+    "3": {
+     "allowedAxis": [
+      -2,
+      -1
+     ],
+     "plane": 1
+    },
+    "4": {
+     "allowedAxis": [
+      -2,
+      -1,
+      0
+     ],
+     "traffic": 1,
+     "plane": 1
+    },
+    "5": {
+     "allowedAxis": [
+      1,
+      2
+     ],
+     "plane": 1
+    },
+    "6": {
+     "plane": 1
+    }
+   }
+  },
+  "28": {
+   "type": "28",
+   "category": "red",
+   "name": "\"OSL\" Gardermoen",
+   "size": 8,
+   "spaces": {
+    "1": {
+     "plane": 1,
+     "traffic": 3
+    },
+    "2": [],
+    "3": {
+     "plane": 1,
+     "traffic": 1
+    },
+    "4": [],
+    "5": {
+     "traffic": 1
+    },
+    "6": {
+     "plane": 1
+    },
+    "7": {
+     "traffic": 1
+    },
+    "8": []
+   }
+  },
+  "29": {
+   "type": "29",
+   "category": "green",
+   "name": "\"OSL\" Gardermoen",
+   "size": 8,
+   "spaces": {
+    "1": {
+     "traffic": 2
+    },
+    "2": [],
+    "3": {
+     "plane": 1
+    },
+    "4": {
+     "traffic": 1
+    },
+    "5": {
+     "plane": 1
+    },
+    "6": {
+     "plane": 1
+    },
+    "7": {
+     "plane": 1
+    },
+    "8": []
+   }
+  },
+  "30": {
+   "type": "30",
+   "category": "black",
+   "name": "\"KEF\" Keflavik",
+   "size": 6,
+   "spaces": {
+    "1": {
+     "traffic": 2
+    },
+    "2": {
+     "allowedAxis": [
+      -2,
+      -1,
+      0
+     ]
+    },
+    "3": {
+     "traffic": 1,
+     "plane": 2
+    },
+    "4": {
+     "allowedAxis": [
+      0,
+      1,
+      2
+     ],
+     "plane": 1
+    },
+    "5": {
+     "allowedAxis": [
+      -1,
+      0,
+      1
+     ],
+     "plane": 1
+    },
+    "6": []
+   }
+  },
+  "31": {
+   "type": "31",
+   "category": "yellow",
+   "name": "\"KEF\" Keflavik",
+   "size": 6,
+   "spaces": {
+    "1": {
+     "traffic": 2
+    },
+    "2": [],
+    "3": {
+     "traffic": 1,
+     "plane": 1
+    },
+    "4": {
+     "plane": 1
+    },
+    "5": {
+     "traffic": 1,
+     "plane": 1
+    },
+    "6": []
+   }
+  },
+  "32": {
+   "type": "32",
+   "category": "yellow",
+   "name": "\"LHR\" Heathrow",
+   "size": 6,
+   "spaces": {
+    "1": {
+     "traffic": 2,
+     "plane": 1
+    },
+    "2": {
+     "plane": 1
+    },
+    "3": {
+     "traffic": 1,
+     "plane": 1
+    },
+    "4": {
+     "traffic": 1,
+     "plane": 2
+    },
+    "5": {
+     "traffic": 1,
+     "plane": 1
+    },
+    "6": {
+     "plane": 2
+    }
+   }
+  },
+  "33": {
+   "type": "33",
+   "category": "green",
+   "name": "\"LHR\" Heathrow",
+   "size": 6,
+   "spaces": {
+    "1": {
+     "traffic": 1
+    },
+    "2": {
+     "plane": 1
+    },
+    "3": {
+     "traffic": 1,
+     "plane": 1
+    },
+    "4": {
+     "plane": 2
+    },
+    "5": {
+     "traffic": 1,
+     "plane": 2
+    },
+    "6": {
+     "plane": 2
+    }
+   }
+  },
+  "34": {
+   "type": "34",
+   "category": "yellow",
+   "name": "\"PRG\" Václav Havel",
+   "size": 8,
+   "spaces": {
+    "1": [],
+    "2": [],
+    "3": {
+     "plane": 1
+    },
+    "4": {
+     "traffic": 1,
+     "plane": 3
+    },
+    "5": [],
+    "6": {
+     "traffic": 1,
+     "plane": 3
+    },
+    "7": {
+     "plane": 2
+    },
+    "8": {
+     "plane": 3
+    }
+   }
+  },
+  "35": {
+   "type": "35",
+   "category": "green",
+   "name": "\"PRG\" Václav Havel",
+   "size": 8,
+   "spaces": {
+    "1": {
+     "traffic": 1
+    },
+    "2": {
+     "allowedAxis": [
+      -1,
+      0
+     ]
+    },
+    "3": {
+     "traffic": 1,
+     "plane": 1
+    },
+    "4": {
+     "allowedAxis": [
+      1,
+      2
+     ],
+     "plane": 1
+    },
+    "5": [],
+    "6": {
+     "traffic": 1,
+     "plane": 1
+    },
+    "7": {
+     "plane": 1
+    },
+    "8": {
+     "plane": 1
+    }
+   }
+  },
+  "50": {
+   "type": "50",
+   "category": "yellow",
+   "name": "\"DUS\" Düsseldorf",
+   "size": 8,
+   "spaces": {
+    "1": {
+     "traffic": 3
+    },
+    "2": {
+     "plane": 1
+    },
+    "3": {
+     "plane": 1
+    },
+    "4": {
+     "plane": 2,
+     "allowedAxis": [
+      -1,
+      0,
+      1
+     ]
+    },
+    "5": {
+     "plane": 1
+    },
+    "6": {
+     "plane": 2,
+     "allowedAxis": [
+      -1,
+      0,
+      1
+     ],
+     "traffic": 2
+    },
+    "7": {
+     "plane": 1
+    },
+    "8": {
+     "plane": 1
+    }
+   }
+  },
+  "51": {
+   "type": "51",
+   "category": "red",
+   "name": "\"DUS\" Düsseldorf",
+   "size": 8,
+   "spaces": {
+    "1": {
+     "plane": 1,
+     "traffic": 2
+    },
+    "2": {
+     "allowedAxis": [
+      1
+     ]
+    },
+    "3": {
+     "traffic": 1
+    },
+    "4": {
+     "plane": 1,
+     "allowedAxis": [
+      -2,
+      -1
+     ],
+     "traffic": 2
+    },
+    "5": {
+     "plane": 2
+    },
+    "6": {
+     "traffic": 1,
+     "plane": 1,
+     "allowedAxis": [
+      1,
+      2
+     ]
+    },
+    "7": {
+     "plane": 3
+    },
+    "8": {
+     "plane": 2
+    }
+   }
+  },
+  "52": {
+   "type": "52",
+   "category": "yellow",
+   "name": "\"TER\" Lajes, Açores",
+   "size": 7,
+   "spaces": {
+    "1": {
+     "traffic": 3,
+     "allowedAxis": [
+      -2,
+      -1
+     ]
+    },
+    "2": {
+     "allowedAxis": [
+      0,
+      1,
+      2
+     ]
+    },
+    "3": {
+     "allowedAxis": [
+      -2,
+      -1
+     ]
+    },
+    "4": {
+     "allowedAxis": [
+      1,
+      2
+     ]
+    },
+    "5": {
+     "plane": 1,
+     "allowedAxis": [
+      -2,
+      -1,
+      0
+     ]
+    },
+    "6": {
+     "plane": 1,
+     "allowedAxis": [
+      1,
+      2
+     ]
+    },
+    "7": {
+     "plane": 1
+    }
+   }
+  },
+  "53": {
+   "type": "53",
+   "category": "black",
+   "name": "\"TER\" Lajes, Açores",
+   "size": 7,
+   "spaces": {
+    "1": {
+     "traffic": 4,
+     "allowedAxis": [
+      -2,
+      -1
+     ]
+    },
+    "2": {
+     "allowedAxis": [
+      1,
+      2
+     ]
+    },
+    "3": {
+     "allowedAxis": [
+      -2,
+      -1
+     ]
+    },
+    "4": {
+     "plane": 1,
+     "allowedAxis": [
+      1,
+      2
+     ]
+    },
+    "5": {
+     "plane": 1,
+     "allowedAxis": [
+      -2,
+      -1
+     ]
+    },
+    "6": {
+     "plane": 1,
+     "allowedAxis": [
+      1,
+      2
+     ]
+    },
+    "7": {
+     "plane": 1
+    }
+   }
+  },
+  "54": {
+   "type": "54",
+   "category": "black",
+   "name": "\"NZIR\" Ice Runway",
+   "size": 8,
+   "spaces": {
+    "1": {
+     "traffic": 2
+    },
+    "2": [],
+    "3": {
+     "allowedAxis": [
+      -1,
+      0
+     ]
+    },
+    "4": [],
+    "5": {
+     "allowedAxis": [
+      1,
+      2
+     ]
+    },
+    "6": [],
+    "7": {
+     "plane": 1,
+     "allowedAxis": [
+      -1,
+      0
+     ]
+    },
+    "8": {
+     "plane": 1
+    }
+   }
+  },
+  "55": {
+   "type": "55",
+   "category": "red",
+   "name": "\"NZIR\" Ice Runway",
+   "size": 8,
+   "spaces": {
+    "1": {
+     "traffic": 3
+    },
+    "2": {
+     "allowedAxis": [
+      -2,
+      -1
+     ]
+    },
+    "3": [],
+    "4": {
+     "plane": 1
+    },
+    "5": {
+     "allowedAxis": [
+      0,
+      1
+     ]
+    },
+    "6": [],
+    "7": {
+     "plane": 1
+    },
+    "8": {
+     "plane": 1
+    }
+   }
+  },
+  "56": {
+   "type": "56",
+   "category": "black",
+   "name": "\"KBP\" Boryspil",
+   "size": 8,
+   "spaces": {
+    "1": {
+     "traffic": 2,
+     "alarm": 2
+    },
+    "2": {
+     "plane": 1,
+     "allowedAxis": [
+      -2,
+      -1
+     ],
+     "traffic": 1
+    },
+    "3": {
+     "plane": 1,
+     "alarm": 1
+    },
+    "4": {
+     "plane": 1,
+     "allowedAxis": [
+      -2,
+      -1
+     ],
+     "traffic": 1,
+     "alarm": 1,
+     "totalTrust": true
+    },
+    "5": {
+     "plane": 1,
+     "allowedAxis": [
+      -1
+     ],
+     "alarm": 1,
+     "totalTrust": true
+    },
+    "6": {
+     "plane": 1,
+     "traffic": 1,
+     "totalTrust": true
+    },
+    "7": {
+     "plane": 1,
+     "alarm": 1,
+     "totalTrust": true
+    },
+    "8": {
+     "plane": 1,
+     "totalTrust": true
+    }
+   }
+  },
+  "57": {
+   "type": "57",
+   "category": "yellow",
+   "name": "\"KBP\" Boryspil",
+   "size": 8,
+   "spaces": {
+    "1": {
+     "traffic": 3
+    },
+    "2": {
+     "plane": 1
+    },
+    "3": {
+     "traffic": 1
+    },
+    "4": {
+     "plane": 2,
+     "allowedAxis": [
+      0,
+      1
+     ],
+     "traffic": 1
+    },
+    "5": {
+     "plane": 1
+    },
+    "6": {
+     "plane": 1,
+     "traffic": 1,
+     "allowedAxis": [
+      -1,
+      0
+     ],
+     "totalTrust": true
+    },
+    "7": {
+     "plane": 1,
+     "totalTrust": true
+    },
+    "8": {
+     "plane": 1,
+     "totalTrust": true
+    }
+   }
+  },
+  "58": {
+   "type": "58",
+   "category": "red",
+   "name": "\"PEK\" Beijing Capital",
+   "size": 6,
+   "spaces": {
+    "1": {
+     "traffic": 3
+    },
+    "2": {
+     "plane": 1,
+     "allowedAxis": [
+      -2,
+      -1
+     ]
+    },
+    "3": {
+     "plane": 1,
+     "traffic": 1,
+     "allowedAxis": [
+      0,
+      1
+     ]
+    },
+    "4": {
+     "plane": 1,
+     "traffic": 1,
+     "allowedAxis": [
+      1,
+      2
+     ]
+    },
+    "5": {
+     "plane": 2
+    },
+    "6": {
+     "plane": 2
+    }
+   }
+  },
+  "59": {
+   "type": "59",
+   "category": "green",
+   "name": "\"PEK\" Beijing Capital",
+   "size": 6,
+   "spaces": {
+    "1": {
+     "traffic": 3
+    },
+    "2": {
+     "plane": 1,
+     "allowedAxis": [
+      -2,
+      -1,
+      0
+     ]
+    },
+    "3": {
+     "plane": 1
+    },
+    "4": {
+     "plane": 1,
+     "allowedAxis": [
+      0,
+      1,
+      2
+     ]
+    },
+    "5": {
+     "plane": 2
+    },
+    "6": {
+     "plane": 2
+    }
+   }
+  },
+  "60": {
+   "type": "60",
+   "category": "black",
+   "name": "\"MAD\" Madrid–Barajas",
+   "size": 7,
+   "spaces": {
+    "1": {
+     "traffic": 3,
+     "allowedAxis": [
+      1,
+      2
+     ]
+    },
+    "2": [],
+    "3": {
+     "traffic": 1,
+     "allowedAxis": [
+      -1
+     ]
+    },
+    "4": {
+     "plane": 1
+    },
+    "5": {
+     "plane": 1,
+     "allowedAxis": [
+      -2,
+      -1
+     ]
+    },
+    "6": {
+     "plane": 1,
+     "traffic": 1
+    },
+    "7": {
+     "plane": 1
+    }
+   }
+  },
+  "61": {
+   "type": "61",
+   "category": "yellow",
+   "name": "\"MAD\" Madrid–Barajas",
+   "size": 7,
+   "spaces": {
+    "1": {
+     "traffic": 4
+    },
+    "2": {
+     "plane": 1,
+     "allowedAxis": [
+      0,
+      1
+     ]
+    },
+    "3": {
+     "traffic": 1,
+     "allowedAxis": [
+      -1,
+      0
+     ]
+    },
+    "4": {
+     "plane": 1
+    },
+    "5": {
+     "plane": 1,
+     "traffic": 1,
+     "allowedAxis": [
+      -2,
+      -1
+     ]
+    },
+    "6": {
+     "plane": 1
+    },
+    "7": {
+     "plane": 2
+    }
+   }
+  },
+  "62": {
+   "type": "62",
+   "category": "red",
+   "name": "\"WAW\" Warsaw Chopin",
+   "size": 5,
+   "spaces": {
+    "1": {
+     "traffic": 3,
+     "allowedAxis": [
+      1,
+      2
+     ]
+    },
+    "2": {
+     "plane": 1,
+     "allowedAxis": [
+      -2,
+      -1
+     ],
+     "alarm": 1
+    },
+    "3": {
+     "plane": 1,
+     "allowedAxis": [
+      1
+     ],
+     "alarm": 1
+    },
+    "4": {
+     "plane": 1,
+     "alarm": 1
+    },
+    "5": {
+     "plane": 1
+    }
+   }
+  },
+  "63": {
+   "type": "63",
+   "category": "yellow",
+   "name": "\"WAW\" Warsaw Chopin",
+   "size": 5,
+   "spaces": {
+    "1": {
+     "traffic": 2,
+     "allowedAxis": [
+      1,
+      2
+     ]
+    },
+    "2": {
+     "allowedAxis": [
+      -2,
+      -1,
+      0
+     ],
+     "alarm": 1
+    },
+    "3": {
+     "traffic": 1,
+     "allowedAxis": [
+      0,
+      1,
+      2
+     ],
+     "alarm": 1
+    },
+    "4": {
+     "plane": 1,
+     "alarm": 1
+    },
+    "5": {
+     "plane": 2
+    }
+   }
+  },
+  "64": {
+   "type": "64",
+   "category": "red",
+   "name": "\"SYD\" Kingsford Smith",
+   "size": 8,
+   "spaces": {
+    "1": {
+     "traffic": 4,
+     "alarm": 2
+    },
+    "2": {
+     "allowedAxis": [
+      1,
+      2
+     ],
+     "alarm": 1
+    },
+    "3": {
+     "alarm": 1
+    },
+    "4": {
+     "plane": 1,
+     "allowedAxis": [
+      1,
+      2
+     ]
+    },
+    "5": {
+     "plane": 1,
+     "alarm": 1
+    },
+    "6": {
+     "plane": 1,
+     "allowedAxis": [
+      1,
+      2
+     ],
+     "alarm": 1
+    },
+    "7": {
+     "plane": 1,
+     "alarm": 1
+    },
+    "8": {
+     "plane": 1
+    }
+   }
+  },
+  "65": {
+   "type": "65",
+   "category": "green",
+   "name": "\"SYD\" Kingsford Smith",
+   "size": 8,
+   "spaces": {
+    "1": {
+     "traffic": 3,
+     "alarm": 1
+    },
+    "2": {
+     "alarm": 1
+    },
+    "3": {
+     "allowedAxis": [
+      1,
+      2
+     ],
+     "alarm": 1
+    },
+    "4": {
+     "plane": 1
+    },
+    "5": {
+     "plane": 1,
+     "alarm": 1
+    },
+    "6": {
+     "allowedAxis": [
+      1,
+      2
+     ],
+     "alarm": 1
+    },
+    "7": {
+     "plane": 1,
+     "alarm": 1
+    },
+    "8": {
+     "plane": 1
+    }
+   }
+  },
+  "66": {
+   "type": "66",
+   "category": "red",
+   "name": "\"SXM\" Princess Juliana",
+   "size": 5,
+   "spaces": {
+    "1": {
+     "traffic": 3,
+     "allowedAxis": [
+      -2,
+      -1
+     ]
+    },
+    "2": [],
+    "3": {
+     "plane": 1,
+     "allowedAxis": [
+      -2
+     ]
+    },
+    "4": {
+     "plane": 1
+    },
+    "5": {
+     "plane": 2
+    }
+   }
+  },
+  "67": {
+   "type": "67",
+   "category": "yellow",
+   "name": "\"SXM\" Princess Juliana",
+   "size": 5,
+   "spaces": {
+    "1": {
+     "traffic": 3,
+     "allowedAxis": [
+      -2,
+      -1
+     ]
+    },
+    "2": {
+     "plane": 1
+    },
+    "3": {
+     "plane": 1,
+     "traffic": 1,
+     "allowedAxis": [
+      -2,
+      -1
+     ]
+    },
+    "4": {
+     "plane": 2,
+     "traffic": 1
+    },
+    "5": {
+     "plane": 2
+    }
+   }
+  },
+  "68": {
+   "type": "68",
+   "category": "black",
+   "name": "\"CPT\" Cape Town",
+   "size": 7,
+   "spaces": {
+    "1": {
+     "traffic": 3,
+     "allowedAxis": [
+      2
+     ],
+     "alarm": 1
+    },
+    "2": {
+     "alarm": 2
+    },
+    "3": {
+     "plane": 1,
+     "allowedAxis": [
+      -2,
+      -1
+     ],
+     "alarm": 1
+    },
+    "4": {
+     "plane": 1,
+     "alarm": 1
+    },
+    "5": {
+     "plane": 1,
+     "allowedAxis": [
+      -2
+     ],
+     "alarm": 1
+    },
+    "6": {
+     "plane": 1,
+     "alarm": 1
+    },
+    "7": {
+     "plane": 1
+    }
+   }
+  },
+  "69": {
+   "type": "69",
+   "category": "green",
+   "name": "\"CPT\" Cape Town",
+   "size": 7,
+   "spaces": {
+    "1": {
+     "traffic": 2
+    },
+    "2": {
+     "plane": 1
+    },
+    "3": {
+     "plane": 1,
+     "allowedAxis": [
+      -2,
+      -1,
+      0
+     ]
+    },
+    "4": {
+     "plane": 1
+    },
+    "5": {
+     "allowedAxis": [
+      -2,
+      -1,
+      0
+     ]
+    },
+    "6": {
+     "plane": 1
+    },
+    "7": {
+     "plane": 1
+    }
+   }
+  }
+ },
+ "scenarios": {
+  "1": {
+   "tags": [
+    "base"
+   ],
+   "approach": "1",
+   "altitude": "1",
+   "modules": []
+  },
+  "2": {
+   "tags": [
+    "base"
+   ],
+   "approach": "2",
+   "altitude": "1",
+   "modules": [
+    "traffic",
+    "turns"
+   ]
+  },
+  "3": {
+   "tags": [
+    "base"
+   ],
+   "approach": "3",
+   "altitude": "1",
+   "modules": [
+    "traffic",
+    "turns",
+    "kerosene",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 1
+  },
+  "4": {
+   "tags": [
+    "base"
+   ],
+   "approach": "4",
+   "altitude": "2",
+   "modules": [
+    "traffic",
+    "turns",
+    "kerosene",
+    "winds",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 2
+  },
+  "5": {
+   "tags": [
+    "base"
+   ],
+   "approach": "5",
+   "altitude": "2",
+   "modules": [
+    "traffic",
+    "turns",
+    "kerosene",
+    "real-time",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 2
+  },
+  "6": {
+   "tags": [
+    "base"
+   ],
+   "approach": "6",
+   "altitude": "1",
+   "modules": [
+    "traffic",
+    "turns",
+    "kerosene",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 2
+  },
+  "7": {
+   "tags": [
+    "base"
+   ],
+   "approach": "7",
+   "altitude": "2",
+   "modules": [
+    "traffic",
+    "turns",
+    "kerosene",
+    "intern",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 1
+  },
+  "8": {
+   "tags": [
+    "promo"
+   ],
+   "approach": "8",
+   "altitude": "2",
+   "modules": [
+    "traffic",
+    "turns",
+    "kerosene",
+    "ice-brakes",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 1
+  },
+  "9": {
+   "tags": [
+    "promo"
+   ],
+   "approach": "9",
+   "altitude": "1",
+   "modules": [
+    "traffic",
+    "turns",
+    "ice-brakes",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 2
+  },
+  "10": {
+   "tags": [
+    "promo"
+   ],
+   "approach": "10",
+   "altitude": "2",
+   "modules": [
+    "traffic",
+    "turns",
+    "kerosene-leak",
+    "real-time",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 1
+  },
+  "11": {
+   "tags": [
+    "promo"
+   ],
+   "approach": "11",
+   "altitude": "1",
+   "modules": [
+    "traffic",
+    "turns",
+    "kerosene-leak",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 2
+  },
+  "12": {
+   "tags": [
+    "promo"
+   ],
+   "approach": "12",
+   "altitude": "2",
+   "modules": [
+    "traffic",
+    "turns",
+    "kerosene",
+    "winds",
+    "intern"
+   ]
+  },
+  "13": {
+   "tags": [
+    "promo"
+   ],
+   "approach": "13",
+   "altitude": "1",
+   "modules": [
+    "traffic",
+    "winds",
+    "intern"
+   ]
+  },
+  "14": {
+   "tags": [
+    "promo"
+   ],
+   "approach": "14",
+   "altitude": "1",
+   "modules": [
+    "traffic",
+    "turns",
+    "ice-brakes",
+    "engine-loss",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 2
+  },
+  "15": {
+   "tags": [
+    "base"
+   ],
+   "approach": "15",
+   "altitude": "2",
+   "modules": [
+    "traffic",
+    "turns",
+    "ice-brakes",
+    "engine-loss",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 1
+  },
+  "16": {
+   "tags": [
+    "base"
+   ],
+   "approach": "16",
+   "altitude": "2",
+   "modules": [
+    "traffic",
+    "turns",
+    "ice-brakes",
+    "kerosene",
+    "intern",
+    "winds-headon"
+   ]
+  },
+  "17": {
+   "tags": [
+    "base"
+   ],
+   "approach": "17",
+   "altitude": "2",
+   "modules": [
+    "traffic",
+    "turns",
+    "ice-brakes",
+    "winds-headon",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 1
+  },
+  "18": {
+   "tags": [
+    "promo"
+   ],
+   "approach": "18",
+   "altitude": "1",
+   "modules": [
+    "traffic",
+    "turns",
+    "winds"
+   ]
+  },
+  "19": {
+   "tags": [
+    "promo"
+   ],
+   "approach": "19",
+   "altitude": "2",
+   "modules": [
+    "traffic",
+    "turns",
+    "winds",
+    "special-abilities",
+    "modified-altitude"
+   ],
+   "nrOfSpecialAbilities": 2,
+   "modifiedAltitude": 2
+  },
+  "20": {
+   "tags": [
+    "promo"
+   ],
+   "approach": "20",
+   "altitude": "2",
+   "modules": [
+    "traffic",
+    "turns",
+    "kerosene",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 1
+  },
+  "21": {
+   "tags": [
+    "promo"
+   ],
+   "approach": "21",
+   "altitude": "1",
+   "modules": [
+    "traffic",
+    "turns",
+    "kerosene-leak"
+   ]
+  },
+  "22": {
+   "tags": [
+    "base"
+   ],
+   "approach": "22",
+   "altitude": "1",
+   "modules": [
+    "traffic",
+    "intern"
+   ]
+  },
+  "23": {
+   "tags": [
+    "base"
+   ],
+   "approach": "23",
+   "altitude": "1",
+   "modules": [
+    "traffic",
+    "turns",
+    "kerosene-leak",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 1
+  },
+  "24": {
+   "tags": [
+    "base"
+   ],
+   "approach": "24",
+   "altitude": "1",
+   "modules": [
+    "traffic",
+    "winds",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 1
+  },
+  "25": {
+   "tags": [
+    "base"
+   ],
+   "approach": "25",
+   "altitude": "2",
+   "modules": [
+    "traffic",
+    "winds",
+    "kerosene-leak",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 2
+  },
+  "26": {
+   "tags": [
+    "base"
+   ],
+   "approach": "26",
+   "altitude": "2",
+   "modules": [
+    "traffic",
+    "turns",
+    "kerosene",
+    "real-time",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 2
+  },
+  "27": {
+   "tags": [
+    "base"
+   ],
+   "approach": "27",
+   "altitude": "2",
+   "modules": [
+    "traffic",
+    "turns",
+    "kerosene",
+    "real-time",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 2
+  },
+  "28": {
+   "tags": [
+    "base"
+   ],
+   "approach": "28",
+   "altitude": "2",
+   "modules": [
+    "traffic",
+    "kerosene-leak",
+    "ice-brakes",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 2
+  },
+  "29": {
+   "tags": [
+    "base"
+   ],
+   "approach": "29",
+   "altitude": "1",
+   "modules": [
+    "traffic",
+    "kerosene"
+   ]
+  },
+  "30": {
+   "tags": [
+    "base"
+   ],
+   "approach": "30",
+   "altitude": "2",
+   "modules": [
+    "traffic",
+    "turns",
+    "winds",
+    "ice-brakes",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 2
+  },
+  "31": {
+   "tags": [
+    "base"
+   ],
+   "approach": "31",
+   "altitude": "1",
+   "modules": [
+    "traffic",
+    "ice-brakes",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 1
+  },
+  "32": {
+   "tags": [
+    "base"
+   ],
+   "approach": "32",
+   "altitude": "1",
+   "modules": [
+    "traffic",
+    "intern"
+   ]
+  },
+  "33": {
+   "tags": [
+    "base"
+   ],
+   "approach": "33",
+   "altitude": "1",
+   "modules": [
+    "traffic"
+   ]
+  },
+  "34": {
+   "tags": [
+    "base"
+   ],
+   "approach": "34",
+   "altitude": "1",
+   "modules": [
+    "traffic",
+    "kerosene-leak",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 2
+  },
+  "35": {
+   "tags": [
+    "base"
+   ],
+   "approach": "35",
+   "altitude": "1",
+   "modules": [
+    "traffic",
+    "turns",
+    "kerosene",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 2
+  },
+  "50": {
+   "tags": [
+    "turbulence"
+   ],
+   "approach": "50",
+   "altitude": "3",
+   "modules": [
+    "traffic",
+    "turns",
+    "bad-visibility",
+    "kerosene-leak",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 2
+  },
+  "51": {
+   "tags": [
+    "turbulence"
+   ],
+   "approach": "51",
+   "altitude": "5",
+   "modules": [
+    "traffic",
+    "turns",
+    "bad-visibility",
+    "turbulence",
+    "real-time",
+    "kerosene-leak",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 1
+  },
+  "52": {
+   "tags": [
+    "turbulence"
+   ],
+   "approach": "52",
+   "altitude": "1",
+   "modules": [
+    "traffic",
+    "turns",
+    "ice-brakes",
+    "engine-loss",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 2
+  },
+  "53": {
+   "tags": [
+    "turbulence"
+   ],
+   "approach": "53",
+   "altitude": "2",
+   "modules": [
+    "traffic",
+    "turns",
+    "ice-brakes",
+    "engine-loss",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 1
+  },
+  "54": {
+   "tags": [
+    "turbulence"
+   ],
+   "approach": "54",
+   "altitude": "2",
+   "modules": [
+    "traffic",
+    "turns",
+    "ice-brakes",
+    "kerosene",
+    "intern",
+    "winds-headon",
+    "penguins"
+   ]
+  },
+  "55": {
+   "tags": [
+    "turbulence"
+   ],
+   "approach": "55",
+   "altitude": "2",
+   "modules": [
+    "traffic",
+    "turns",
+    "ice-brakes",
+    "winds-headon",
+    "special-abilities",
+    "penguins"
+   ],
+   "nrOfSpecialAbilities": 1
+  },
+  "56": {
+   "tags": [
+    "turbulence",
+    "new"
+   ],
+   "approach": "56",
+   "altitude": "2",
+   "modules": [
+    "traffic",
+    "turns",
+    "alarms",
+    "total-trust",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 2
+  },
+  "57": {
+   "tags": [
+    "turbulence",
+    "new"
+   ],
+   "approach": "57",
+   "altitude": "1",
+   "modules": [
+    "traffic",
+    "turns",
+    "total-trust",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 2
+  },
+  "58": {
+   "tags": [
+    "turbulence"
+   ],
+   "approach": "58",
+   "altitude": "5",
+   "modules": [
+    "traffic",
+    "turns",
+    "bad-visibility",
+    "turbulence",
+    "winds",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 1
+  },
+  "59": {
+   "tags": [
+    "turbulence"
+   ],
+   "approach": "59",
+   "altitude": "3",
+   "modules": [
+    "traffic",
+    "turns",
+    "bad-visibility",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 1
+  },
+  "60": {
+   "tags": [
+    "turbulence"
+   ],
+   "approach": "60",
+   "altitude": "2",
+   "modules": [
+    "traffic",
+    "turns",
+    "modified-altitude",
+    "kerosene",
+    "real-time",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 1,
+   "modifiedAltitude": 2
+  },
+  "61": {
+   "tags": [
+    "turbulence"
+   ],
+   "approach": "61",
+   "altitude": "1",
+   "modules": [
+    "traffic",
+    "turns",
+    "modified-altitude",
+    "intern",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 1,
+   "modifiedAltitude": 2
+  },
+  "62": {
+   "tags": [
+    "turbulence"
+   ],
+   "approach": "62",
+   "altitude": "2",
+   "modules": [
+    "traffic",
+    "turns",
+    "stuck-landing-gear",
+    "alarms",
+    "winds",
+    "kerosene",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 1
+  },
+  "63": {
+   "tags": [
+    "turbulence"
+   ],
+   "approach": "63",
+   "altitude": "1",
+   "modules": [
+    "traffic",
+    "turns",
+    "stuck-landing-gear",
+    "alarms",
+    "kerosene",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 1
+  },
+  "64": {
+   "tags": [
+    "turbulence"
+   ],
+   "approach": "64",
+   "altitude": "5",
+   "modules": [
+    "traffic",
+    "turns",
+    "alarms",
+    "bad-visibility",
+    "turbulence",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 2
+  },
+  "65": {
+   "tags": [
+    "turbulence"
+   ],
+   "approach": "65",
+   "altitude": "1",
+   "modules": [
+    "traffic",
+    "turns",
+    "alarms",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 1
+  },
+  "66": {
+   "tags": [
+    "turbulence"
+   ],
+   "approach": "66",
+   "altitude": "6",
+   "modules": [
+    "traffic",
+    "turns",
+    "bad-visibility",
+    "turbulence",
+    "modified-altitude",
+    "kerosene",
+    "intern"
+   ],
+   "modifiedAltitude": 2
+  },
+  "67": {
+   "tags": [
+    "turbulence"
+   ],
+   "approach": "67",
+   "altitude": "4",
+   "modules": [
+    "traffic",
+    "turns",
+    "turbulence",
+    "modified-altitude",
+    "intern"
+   ],
+   "modifiedAltitude": 2
+  },
+  "68": {
+   "tags": [
+    "turbulence"
+   ],
+   "approach": "68",
+   "altitude": "6",
+   "modules": [
+    "traffic",
+    "turns",
+    "bad-visibility",
+    "turbulence",
+    "alarms",
+    "winds",
+    "intern"
+   ]
+  },
+  "69": {
+   "tags": [
+    "turbulence"
+   ],
+   "approach": "69",
+   "altitude": "4",
+   "modules": [
+    "traffic",
+    "turns",
+    "turbulence",
+    "kerosene",
+    "special-abilities"
+   ],
+   "nrOfSpecialAbilities": 1
+  }
+ },
+ "altitude": {
+  "1": {
+   "type": "1",
+   "categories": [
+    "green",
+    "yellow"
+   ],
+   "size": 7,
+   "spaces": {
+    "1": {
+     "altitudeHeight": "6000",
+     "startPlayer": "pilot",
+     "reroll": 1
+    },
+    "2": {
+     "altitudeHeight": "5000",
+     "startPlayer": "co-pilot"
+    },
+    "3": {
+     "altitudeHeight": "4000",
+     "startPlayer": "pilot"
+    },
+    "4": {
+     "altitudeHeight": "3000",
+     "startPlayer": "co-pilot"
+    },
+    "5": {
+     "altitudeHeight": "2000",
+     "startPlayer": "pilot",
+     "reroll": 1
+    },
+    "6": {
+     "altitudeHeight": "1000",
+     "startPlayer": "co-pilot"
+    },
+    "7": {
+     "altitudeHeight": "0000",
+     "startPlayer": "pilot"
+    }
+   }
+  },
+  "2": {
+   "type": "2",
+   "categories": [
+    "red",
+    "black"
+   ],
+   "size": 7,
+   "spaces": {
+    "1": {
+     "altitudeHeight": "6000",
+     "startPlayer": "pilot",
+     "reroll": 1
+    },
+    "2": {
+     "altitudeHeight": "5000",
+     "startPlayer": "co-pilot"
+    },
+    "3": {
+     "altitudeHeight": "4000",
+     "startPlayer": "pilot"
+    },
+    "4": {
+     "altitudeHeight": "3000",
+     "startPlayer": "co-pilot"
+    },
+    "5": {
+     "altitudeHeight": "2000",
+     "startPlayer": "pilot"
+    },
+    "6": {
+     "altitudeHeight": "1000",
+     "startPlayer": "co-pilot"
+    },
+    "7": {
+     "altitudeHeight": "0000",
+     "startPlayer": "pilot"
+    }
+   }
+  },
+  "3": {
+   "type": "3",
+   "categories": [
+    "green",
+    "yellow"
+   ],
+   "size": 7,
+   "spaces": {
+    "1": {
+     "altitudeHeight": "6000",
+     "startPlayer": "pilot",
+     "reroll": 1
+    },
+    "2": {
+     "altitudeHeight": "5000",
+     "startPlayer": "co-pilot"
+    },
+    "3": {
+     "altitudeHeight": "4000",
+     "startPlayer": "pilot",
+     "badVisibility": true
+    },
+    "4": {
+     "altitudeHeight": "3000",
+     "startPlayer": "co-pilot",
+     "badVisibility": true
+    },
+    "5": {
+     "altitudeHeight": "2000",
+     "startPlayer": "pilot",
+     "reroll": 1,
+     "badVisibility": true
+    },
+    "6": {
+     "altitudeHeight": "1000",
+     "startPlayer": "co-pilot",
+     "badVisibility": true
+    },
+    "7": {
+     "altitudeHeight": "0000",
+     "startPlayer": "pilot"
+    }
+   }
+  },
+  "4": {
+   "type": "4",
+   "categories": [
+    "green",
+    "yellow"
+   ],
+   "size": 7,
+   "spaces": {
+    "1": {
+     "altitudeHeight": "6000",
+     "startPlayer": "pilot",
+     "reroll": 1
+    },
+    "2": {
+     "altitudeHeight": "5000",
+     "startPlayer": "co-pilot",
+     "turbulence": true
+    },
+    "3": {
+     "altitudeHeight": "4000",
+     "startPlayer": "pilot",
+     "turbulence": true
+    },
+    "4": {
+     "altitudeHeight": "3000",
+     "startPlayer": "co-pilot",
+     "turbulence": true
+    },
+    "5": {
+     "altitudeHeight": "2000",
+     "startPlayer": "pilot",
+     "reroll": 1,
+     "turbulence": true
+    },
+    "6": {
+     "altitudeHeight": "1000",
+     "startPlayer": "co-pilot"
+    },
+    "7": {
+     "altitudeHeight": "0000",
+     "startPlayer": "pilot"
+    }
+   }
+  },
+  "5": {
+   "type": "5",
+   "categories": [
+    "red",
+    "black"
+   ],
+   "size": 7,
+   "spaces": {
+    "1": {
+     "altitudeHeight": "6000",
+     "startPlayer": "pilot",
+     "reroll": 1
+    },
+    "2": {
+     "altitudeHeight": "5000",
+     "startPlayer": "co-pilot",
+     "turbulence": true
+    },
+    "3": {
+     "altitudeHeight": "4000",
+     "startPlayer": "pilot",
+     "turbulence": true
+    },
+    "4": {
+     "altitudeHeight": "3000",
+     "startPlayer": "co-pilot",
+     "badVisibility": true
+    },
+    "5": {
+     "altitudeHeight": "2000",
+     "startPlayer": "pilot",
+     "badVisibility": true
+    },
+    "6": {
+     "altitudeHeight": "1000",
+     "startPlayer": "co-pilot",
+     "badVisibility": true
+    },
+    "7": {
+     "altitudeHeight": "0000",
+     "startPlayer": "pilot"
+    }
+   }
+  },
+  "6": {
+   "type": "6",
+   "categories": [
+    "red",
+    "black"
+   ],
+   "size": 7,
+   "spaces": {
+    "1": {
+     "altitudeHeight": "6000",
+     "startPlayer": "pilot",
+     "reroll": 1
+    },
+    "2": {
+     "altitudeHeight": "5000",
+     "startPlayer": "co-pilot",
+     "turbulence": true
+    },
+    "3": {
+     "altitudeHeight": "4000",
+     "startPlayer": "pilot",
+     "turbulence": true
+    },
+    "4": {
+     "altitudeHeight": "3000",
+     "startPlayer": "co-pilot",
+     "turbulence": true,
+     "badVisibility": true
+    },
+    "5": {
+     "altitudeHeight": "2000",
+     "startPlayer": "pilot",
+     "turbulence": true,
+     "badVisibility": true
+    },
+    "6": {
+     "altitudeHeight": "1000",
+     "startPlayer": "co-pilot"
+    },
+    "7": {
+     "altitudeHeight": "0000",
+     "startPlayer": "pilot",
+     "badVisibility": true
+    }
+   }
+  }
+ },
+ "abilities": {
+  "1": {
+   "name": "Anticipation",
+   "description": "Each round, before placing their 1st die, the First Player may choose to reroll one of their dice."
+  },
+  "2": {
+   "name": "Adaptation",
+   "description": "Once per game, each player can turn one of their unplayed dice to its opposite face."
+  },
+  "3": {
+   "name": "Mastery",
+   "description": "If you play 2 dice with the same value on the <b>\"ENGINES\"</b>, immediately gain <b>a Reroll token</b> (only if a token is available)."
+  },
+  "4": {
+   "name": "Synchronisation",
+   "description": "If you have placed at least one die on Landing Gear and one die on Flaps, immediately roll the Traffic die. The Co-Pilot must place it on any empty space on the Control Panel regardless of its colour. Apply the effect of the Traffic die as if it were a normal die. It counts as an extra action for this turn. You can use coffee to change the value, but be aware that the Traffic die has no faces with value 1 or 6."
+  },
+  "5": {
+   "name": "Working Together",
+   "description": "Once per round, at any time, a player may request to swap the dice values of two unplaced dice. Once the player has chosen a die to swap values for, the other player \"MUST\" choose a die as well. The values are then swapped."
+  },
+  "6": {
+   "name": "Control",
+   "description": "If you play 2 dice of the same value on the <b>\"AXIS\"</b>, immediately gain a Coffee token."
+  }
+ }
+}
