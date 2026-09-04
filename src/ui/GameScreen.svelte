@@ -273,6 +273,7 @@
     </div>
   </div>
 
+  <span class="sr-only" aria-live="polite">{turnLine}</span>
   <StatusBar gs={vs} {scenario} {feet} {names} myTurnLine={turnLine} {sterile} {clock} {peerStatus} onRules={() => (showRules = true)} onLeave={onExit} />
 
   <div class="deck">
@@ -364,6 +365,13 @@
 </main>
 
 <style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
   .cockpit {
     position: relative;
     min-height: 100dvh;
