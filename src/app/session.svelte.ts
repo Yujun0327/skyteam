@@ -1,10 +1,14 @@
 import { DEFAULT_SCENARIO, getScenario } from '../data'
 import { REAL_TIME_SECONDS, RULES_VERSION, applyMove, createGame, ctxOf, legalMoves, other, publicHash, redact } from '../engine'
 import type { AbilityId, GameConfig, GameState, Move, Seat } from '../engine'
-import { PROTOCOL_VERSION } from '../transport/types'
-import type { Beacon, ChatLine, GameSnapshot, LobbyPick, Transport, WireMove } from '../transport/types'
-import { connectRoom } from '../transport/mqtt'
-import { clearGame, loadGame, recordLanding, saveGame } from './persist'
+import {
+  BeaconSession,
+  brokersFromEnv,
+  type Beacon,
+  type GameAdapter,
+  type Transport,
+} from '@yujun/game-net'
+import { APP, loadChat, recordLanding, saveChat } from './persist'
 
 export type SfxEvent =
   | 'roll'
@@ -31,8 +35,26 @@ export type OnlineStatus =
   | 'room-full'
   | 'version-mismatch'
 
-function log(text: string): void {
-  console.log(`[skyteam] ${text}`)
+export interface ChatLine {
+  id: string
+  from: string
+  name: string
+  seat: Seat | null
+  text: string
+  ts: number
+}
+
+/** Host's lobby selection, visible to the guest before the game exists. */
+export interface LobbyPick {
+  scenarioId: string
+  hostSeat: Seat
+  abilities: AbilityId[]
+}
+
+/** Game-defined beacon payload: the host's pick and everyone's chat. */
+interface Extra {
+  pick: LobbyPick | null
+  chat: ChatLine[]
 }
 
 function seed32(): number {
@@ -92,6 +114,11 @@ export abstract class BaseSession {
     const before = this.state
     const after = applyMove(before, actor, move)
     this.state = after
+    this.afterApply(before, after, move, quiet)
+  }
+
+  /** Clock, landing record, sound effects and forced responses for one transition. */
+  protected afterApply(before: GameState, after: GameState, move: Move, quiet = false): void {
     this.trackClock(before, after)
     if (after.result?.outcome === 'landed' && !this.landedRecorded) {
       this.landedRecorded = true
@@ -178,82 +205,148 @@ export interface Identity {
   name: string
 }
 
+type Core = BeaconSession<GameConfig, GameState, Move>
+
+function placeholderConfig(): GameConfig {
+  return { scenarioId: DEFAULT_SCENARIO, sharedSeed: 0, names: ['Pilot', 'Co-Pilot'], abilities: [], rulesVersion: RULES_VERSION }
+}
+
 /**
- * Online play over stateless beacons (see transport/types.ts). Host election
- * is deterministic from any beacon (creator wins, clientId breaks ties); the
- * host creates the game from its lobby pick when it presses start; guests
- * adopt it idempotently; moves ride in the beacon's log.
+ * Sky Team on the shared beacon session (see @yujun/game-net). Seats are
+ * 0 = pilot, 1 = co-pilot; the host's lobby pick decides who flies which,
+ * and a rematch swaps them. The pick and the chat ride in the beacon's
+ * game-defined `extra` payload.
  */
+function makeAdapter(host: () => OnlineSession | null): GameAdapter<GameConfig, GameState, Move> {
+  return {
+    app: APP,
+    protocol: 2,
+    rulesVersion: String(RULES_VERSION),
+    minSeats: 2,
+    maxSeats: 2,
+    makeConfig: (players, prev) => {
+      if (players.length < 2) return placeholderConfig()
+      const pick = host()?.pick
+      return {
+        scenarioId: prev ? prev.scenarioId : (pick?.scenarioId ?? DEFAULT_SCENARIO),
+        sharedSeed: seed32(),
+        names: [players[0].name, players[1].name],
+        abilities: prev ? prev.abilities : (pick?.abilities ?? []),
+        rulesVersion: RULES_VERSION,
+      }
+    },
+    // lobby order is host first; the pick says whether the host is the pilot
+    orderSeats: (players, prev) =>
+      prev ? [...players].reverse() : (host()?.pick.hostSeat ?? 0) === 0 ? players : [...players].reverse(),
+    create: (cfg) => ({ state: createGame(cfg) }),
+    apply: applyMove,
+    hash: publicHash,
+    actor: (s) => s.seatToAct,
+    isOver: (s) => s.result !== null,
+  }
+}
+
+export interface OnlineTestHooks {
+  transport?: Transport<Beacon<GameConfig, Move>>
+  now?: () => number
+  timers?: boolean
+}
+
 export class OnlineSession extends BaseSession {
   readonly mode = 'online'
   readonly room: string
-  status = $state<OnlineStatus>('connecting')
-  peerHere = $state(false)
-  seat = $state<Seat>(0)
-  partnerName = $state('')
-  rematchWanted = $state(false)
+  readonly clientId: string
   scanCount = $state(0)
   chat = $state<ChatLine[]>([])
   /** Host's lobby selection; mirrored on the guest. */
   pick = $state<LobbyPick>({ scenarioId: DEFAULT_SCENARIO, hostSeat: 0, abilities: [] })
 
-  private transport: Transport
-  readonly clientId: string
-  private readonly creator: boolean
-  private name: string
-  private partnerId: string | null = null
-  private partnerCreator = false
-  private snapshot: GameSnapshot | null = null
-  /** MUST be reactive (see toybattle history): `playing` short-circuits on it. */
-  private started = $state(false)
-  private lastBeaconIn = 0
-  private lastBeaconOut = 0
+  private readonly core: Core
+  /** Reactive revision (see toybattle history): `playing` must track something while false. */
+  private rev = $state(0)
+  private gameId = ''
+  private seenLog = 0
+  private prev: GameState
   private chatSeq = 0
-  private timers: ReturnType<typeof setInterval>[] = []
-  private onVisible = () => {
-    if (typeof document === 'undefined' || document.hidden) return
-    this.transport.wake?.()
-    this.sendBeacon()
+
+  constructor(room: string, creator: boolean, me: Identity, test: OnlineTestHooks = {}) {
+    const self: { s: OnlineSession | null } = { s: null }
+    const core: Core = new BeaconSession(makeAdapter(() => self.s), {
+      room,
+      creator,
+      identity: { key: me.key, name: me.name || (creator ? 'Captain' : 'First Officer') },
+      transport: test.transport,
+      brokers: test.transport ? undefined : brokersFromEnv(import.meta.env as Record<string, string | undefined>),
+      now: test.now,
+      timers: test.timers,
+      log: (t) => console.log(`[${APP}] ${t}`),
+    })
+    super(core.cfg ?? placeholderConfig())
+    self.s = this
+    this.core = core
+    this.room = core.room
+    this.clientId = core.myKey
+    this.state = core.state
+    this.prev = core.state
+    this.seenLog = core.logLength
+    this.gameId = core.snapshot?.gameId ?? ''
+    this.chat = loadChat(this.room)
+    if (core.snapshot) {
+      this.pick = { scenarioId: core.snapshot.cfg.scenarioId, hostSeat: (core.snapshot.seats[core.myKey] ?? 0) as Seat, abilities: core.snapshot.cfg.abilities }
+    }
+    core.subscribe(() => this.sync())
+    core.setReady(true) // Sky Team has no ready ritual: the host presses start
+    this.announce()
+    if (core.started) queueMicrotask(() => this.autoRespond())
   }
 
-  constructor(room: string, creator: boolean, me: Identity, transport?: Transport) {
-    const saved = loadGame(room, me.key)
-    super(
-      saved?.snapshot.cfg ?? {
-        scenarioId: DEFAULT_SCENARIO,
-        sharedSeed: 0,
-        names: ['Pilot', 'Co-Pilot'],
-        abilities: [],
-        rulesVersion: RULES_VERSION,
-      },
-    )
-    this.room = room
-    this.creator = creator
-    this.clientId = me.key
-    this.name = me.name || (creator ? 'Captain' : 'First Officer')
-    this.transport = transport ?? connectRoom(room)
-    this.attach(this.transport)
+  private get c(): Core {
+    void this.rev
+    return this.core
+  }
 
-    if (saved) {
-      this.seat = saved.seat
-      this.chat = saved.chat ?? []
-      this.snapshot = { ...saved.snapshot, log: [] }
-      this.pick = { scenarioId: saved.snapshot.cfg.scenarioId, hostSeat: saved.snapshot.hostSeat, abilities: saved.snapshot.cfg.abilities }
-      try {
-        for (const wire of saved.snapshot.log) this.applyWire(wire, true)
-        this.started = true
-        log(`restored game ${this.snapshot.gameId} at move ${this.snapshot.log.length}`)
-        queueMicrotask(() => this.autoRespond())
-      } catch (err) {
-        log(`saved game unusable, starting fresh (${String(err)})`)
-        this.snapshot = null
-        clearGame(room, me.key)
-      }
+  private announce(): void {
+    this.core.setExtra({ pick: this.core.isHost ? $state.snapshot(this.pick) : null, chat: $state.snapshot(this.chat) } satisfies Extra)
+  }
+
+  private sync(): void {
+    const core = this.core
+    if (core.snapshot && core.snapshot.gameId !== this.gameId) {
+      this.gameId = core.snapshot.gameId
+      this.seenLog = 0
+      this.cfg = core.snapshot.cfg
+      this.prev = createGame(core.snapshot.cfg)
+      this.clockDeadline = null
     }
+    this.state = core.state
+    const log = core.snapshot?.log ?? []
+    const fresh = log.length - this.seenLog
+    if (fresh > 0) {
+      let st = this.prev
+      for (const wire of log.slice(this.seenLog)) {
+        const next = applyMove(st, wire.actor as Seat, wire.move)
+        this.afterApply(st, next, wire.move, fresh > 2)
+        st = next
+      }
+      if (fresh > 2) queueMicrotask(() => this.autoRespond())
+    }
+    this.seenLog = log.length
+    this.prev = core.state
 
-    this.timers.push(setInterval(() => this.tick(), 1000))
-    if (typeof document !== 'undefined') document.addEventListener('visibilitychange', this.onVisible)
-    log(`session up · room=${room} creator=${creator} id=${this.clientId} resumed=${this.started}`)
+    // game-defined payloads from peers: the host's pick, everyone's chat
+    for (const p of core.livePeers) {
+      const extra = p.extra as Extra | undefined
+      if (!extra) continue
+      if (extra.pick && !core.started && !core.isHost && p.key === core.hostKey) this.pick = extra.pick
+      this.mergeChat(extra.chat)
+    }
+    this.rev++
+  }
+
+  /* ---------------- base overrides ---------------- */
+
+  get seat(): Seat {
+    return (this.c.seat ?? 0) as Seat
   }
 
   get mySeat(): Seat {
@@ -264,60 +357,95 @@ export class OnlineSession extends BaseSession {
     return this.seat
   }
 
+  get spectator(): boolean {
+    return this.c.spectator
+  }
+
+  get myTurn(): boolean {
+    return this.c.seat !== null && !this.state.result && this.actor === this.seat
+  }
+
   get playing(): boolean {
-    return this.started && this.status !== 'desync' && this.status !== 'version-mismatch'
+    const c = this.c
+    return c.started && !c.spectator && c.status !== 'desync' && c.status !== 'version-mismatch'
   }
 
   get isHost(): boolean {
-    if (this.snapshot) return this.snapshot.hostId === this.clientId
-    if (this.creator !== this.partnerCreator) return this.creator
-    return this.clientId < (this.partnerId ?? '~')
+    return this.c.isHost
   }
 
   get names(): [string, string] {
     return this.cfg.names
   }
 
+  /* ---------------- presence & status ---------------- */
+
+  private get partnerKey(): string | null {
+    const c = this.core
+    const seats = c.snapshot?.seats
+    if (seats) return Object.keys(seats).find((k) => k !== c.myKey) ?? null
+    return c.livePeers[0]?.key ?? null
+  }
+
+  get peerHere(): boolean {
+    const c = this.c
+    const k = this.partnerKey
+    return k !== null && c.presence(k)
+  }
+
+  get partnerName(): string {
+    const k = this.partnerKey
+    return k ? this.c.nameOf(k) : ''
+  }
+
+  get status(): OnlineStatus {
+    const c = this.c
+    if (c.status === 'version-mismatch' || c.status === 'room-full' || c.status === 'desync') return c.status
+    if (c.spectator) return 'room-full' // a two-seat cockpit has no jump seat
+    if (c.started) return this.peerHere ? 'playing' : 'peer-left'
+    return this.peerHere ? 'handshake' : 'connecting'
+  }
+
+  get rematchWanted(): boolean {
+    return this.c.wantRematch
+  }
+
   /** Talking is allowed only during the briefing and after the landing. */
   get chatOpen(): boolean {
-    return !this.started || this.state.phase === 'briefing' || this.state.phase === 'over'
+    return !this.c.started || this.state.phase === 'briefing' || this.state.phase === 'over'
   }
 
   rescan(): void {
     this.scanCount++
-    this.transport.wake?.()
-    this.sendBeacon()
+    this.core.rescan()
   }
 
   relayCount(): number {
-    return this.transport.relayCount?.() ?? 0
+    return this.c.channelCount()
+  }
+
+  brokerCount(): number {
+    return this.core.channels().length
   }
 
   /** Host: update the lobby selection. */
   setPick(pick: Partial<LobbyPick>): void {
-    if (this.started || !this.isHost) return
+    if (this.core.started || !this.core.isHost) return
     this.pick = { ...this.pick, ...pick }
-    this.sendBeacon()
+    this.announce()
   }
 
   get canStart(): boolean {
-    return !this.started && this.isHost && this.peerHere
+    return this.c.canStart
   }
 
   /** Host: create the game from the current pick. */
   startGame(): void {
-    if (!this.canStart) return
-    this.createNewGame(false)
+    this.core.startGame()
   }
 
   submit(move: Move): void {
-    if (!this.snapshot) return
-    const actor = this.actor
-    if (actor !== this.seat) throw new Error('not your seat')
-    this.applyLocal(actor, move)
-    this.snapshot.log.push({ seq: this.snapshot.log.length + 1, actor, move, hash: publicHash(this.state) })
-    this.persist()
-    this.sendBeacon()
+    this.core.submit(move)
   }
 
   say(text: string): void {
@@ -326,38 +454,44 @@ export class OnlineSession extends BaseSession {
     const line: ChatLine = {
       id: `${this.clientId}-${Date.now().toString(36)}-${this.chatSeq++}`,
       from: this.clientId,
-      name: this.name,
-      seat: this.started ? this.seat : null,
+      name: this.core.name,
+      seat: this.core.started ? this.seat : null,
       text: t,
       ts: Date.now(),
     }
     this.chat = [...this.chat, line].slice(-40)
-    this.persist()
-    this.sendBeacon()
+    saveChat(this.room, $state.snapshot(this.chat))
+    this.announce()
+  }
+
+  private mergeChat(lines: ChatLine[] | undefined): void {
+    if (!lines?.length) return
+    const have = new Set(this.chat.map((l) => l.id))
+    const fresh = lines.filter((l) => !have.has(l.id))
+    if (!fresh.length) return
+    this.chat = [...this.chat, ...fresh].sort((a, b) => a.ts - b.ts).slice(-40)
+    saveChat(this.room, $state.snapshot(this.chat))
   }
 
   requestRematch(): void {
-    this.rematchWanted = true
-    if (this.isHost && this.state.result) this.createNewGame(true)
-    else this.sendBeacon()
+    this.core.requestRematch()
+  }
+
+  /** Test/diagnostic access to the shared core. */
+  get net(): Core {
+    return this.core
   }
 
   leave(): void {
-    clearGame(this.room, this.clientId)
-    this.destroy()
+    this.core.leave()
   }
 
   destroy(): void {
-    for (const t of this.timers) clearInterval(t)
-    if (typeof document !== 'undefined') document.removeEventListener('visibilitychange', this.onVisible)
-    this.transport.close()
+    this.core.destroy()
   }
 
   /** Real-time module: the turn holder's clock submits the timeout. */
-  protected autoRespond(): void {
-    if (!this.snapshot || this.state.result) return
-    if (this.state.phase === 'over') return
-  }
+  protected autoRespond(): void {}
 
   /** Called by the UI clock when the deadline passes. */
   expireClock(): void {
@@ -368,176 +502,5 @@ export class OnlineSession extends BaseSession {
     } catch {
       /* superseded */
     }
-  }
-
-  /* ---- internals ---- */
-
-  private attach(t: Transport): void {
-    t.onMessage((msg) => this.onBeacon(msg))
-    t.onPeerJoin(() => this.sendBeacon())
-    t.onPeerLeave(() => {})
-  }
-
-  private tick(): void {
-    const now = Date.now()
-    if (this.peerHere && now - this.lastBeaconIn > 15_000) {
-      this.peerHere = false
-      if (this.started && this.status === 'playing') this.status = 'peer-left'
-      log('partner beacons stopped')
-    }
-    const cadence = this.peerHere && this.snapshot ? 6_000 : 2_500
-    if (now - this.lastBeaconOut >= cadence) this.sendBeacon()
-  }
-
-  private sendBeacon(): void {
-    this.lastBeaconOut = Date.now()
-    this.transport.send({
-      t: 'sync',
-      protocol: PROTOCOL_VERSION,
-      room: this.room,
-      clientId: this.clientId,
-      creator: this.creator,
-      name: this.name,
-      partnerId: this.partnerId,
-      wantRematch: this.rematchWanted,
-      pick: this.isHost ? this.pick : null,
-      chat: this.chat,
-      game: this.snapshot,
-    })
-  }
-
-  private onBeacon(b: Beacon): void {
-    if (b.t !== 'sync' || b.room !== this.room || b.clientId === this.clientId) return
-    if (b.protocol !== PROTOCOL_VERSION) {
-      if (!this.started) this.status = 'version-mismatch'
-      return
-    }
-    const sameGame = !!(this.snapshot && b.game && b.game.gameId === this.snapshot.gameId)
-    if (b.partnerId && b.partnerId !== this.clientId && !sameGame) {
-      if (!this.started) this.status = 'room-full'
-      return
-    }
-    if (this.partnerId && b.clientId !== this.partnerId) {
-      if (!sameGame && this.peerHere) return
-      log(`partner reseated: ${this.partnerId} → ${b.clientId}`)
-      this.partnerId = b.clientId
-    }
-    this.partnerId ??= b.clientId
-    this.partnerCreator = b.creator
-    this.partnerName = b.name
-    this.lastBeaconIn = Date.now()
-    if (!this.peerHere) {
-      this.peerHere = true
-      log(`partner present: ${b.clientId}`)
-    }
-    if (this.status === 'connecting' || this.status === 'room-full') this.status = 'handshake'
-    if (this.started && this.status === 'peer-left') this.status = 'playing'
-
-    if (b.pick && !this.isHost && !this.started) this.pick = b.pick
-    this.mergeChat(b.chat)
-    if (b.game) this.mergeGame(b.game)
-
-    if (this.snapshot && this.isHost && this.state.result && (b.wantRematch || this.rematchWanted)) {
-      this.createNewGame(true)
-    }
-    if (
-      this.snapshot &&
-      (!b.game || (b.game.gameId === this.snapshot.gameId && b.game.log.length < this.snapshot.log.length))
-    ) {
-      this.sendBeacon()
-    }
-  }
-
-  private mergeChat(lines: ChatLine[] | undefined): void {
-    if (!lines?.length) return
-    const have = new Set(this.chat.map((l) => l.id))
-    const fresh = lines.filter((l) => !have.has(l.id))
-    if (!fresh.length) return
-    this.chat = [...this.chat, ...fresh].sort((a, b) => a.ts - b.ts).slice(-40)
-  }
-
-  private createNewGame(rematch: boolean): void {
-    const prev = this.snapshot
-    const hostSeat: Seat = rematch && prev ? other(this.seat) : this.pick.hostSeat
-    const cfgBase = rematch && prev ? prev.cfg : null
-    const scenarioId = cfgBase?.scenarioId ?? this.pick.scenarioId
-    const abilities = cfgBase?.abilities ?? this.pick.abilities
-    const names: [string, string] = hostSeat === 0 ? [this.name, this.partnerName || 'First Officer'] : [this.partnerName || 'Captain', this.name]
-    const snapshot: GameSnapshot = {
-      gameId: `${this.room}-${seed32().toString(36)}`,
-      cfg: { scenarioId, sharedSeed: seed32(), names, abilities, rulesVersion: RULES_VERSION },
-      hostId: this.clientId,
-      hostSeat,
-      log: [],
-    }
-    log(`hosting game ${snapshot.gameId} on ${scenarioId}, I am seat ${hostSeat}`)
-    this.adopt(snapshot, hostSeat)
-  }
-
-  private adopt(snap: GameSnapshot, seat: Seat): void {
-    this.snapshot = { ...snap, log: [] }
-    this.seat = seat
-    this.rematchWanted = false
-    this.cfg = snap.cfg
-    this.state = createGame(snap.cfg)
-    this.clockDeadline = null
-    this.started = true
-    if (this.status !== 'desync') this.status = 'playing'
-    try {
-      for (const wire of snap.log) this.applyWire(wire, true)
-    } catch (err) {
-      log(`adopt replay failed: ${String(err)}`)
-      this.status = 'desync'
-    }
-    this.persist()
-    this.sendBeacon()
-    queueMicrotask(() => this.autoRespond())
-  }
-
-  private mergeGame(g: GameSnapshot): void {
-    if (g.cfg.rulesVersion !== RULES_VERSION) {
-      if (!this.started) this.status = 'version-mismatch'
-      return
-    }
-    if (!this.snapshot) {
-      const seat = g.hostId === this.clientId ? g.hostSeat : other(g.hostSeat)
-      log(`adopting game ${g.gameId} as seat ${seat}`)
-      this.adopt(g, seat)
-      return
-    }
-    if (g.gameId !== this.snapshot.gameId) {
-      if (!this.isHost) {
-        log(`replacing game ${this.snapshot.gameId} with host's ${g.gameId}`)
-        this.adopt(g, other(g.hostSeat))
-      }
-      return
-    }
-    const before = this.snapshot.log.length
-    for (let i = this.snapshot.log.length; i < g.log.length; i++) {
-      try {
-        this.applyWire(g.log[i], g.log.length - before > 2)
-      } catch (err) {
-        log(`remote move rejected: ${String(err)}`)
-        this.status = 'desync'
-        return
-      }
-    }
-    if (this.snapshot.log.length > before) {
-      this.persist()
-      queueMicrotask(() => this.autoRespond())
-    }
-  }
-
-  private applyWire(wire: WireMove, quiet = false): void {
-    if (!this.snapshot) return
-    if (wire.seq !== this.snapshot.log.length + 1) throw new Error(`bad seq ${wire.seq}`)
-    this.applyLocal(wire.actor, wire.move, quiet)
-    if (publicHash(this.state) !== wire.hash) throw new Error(`hash mismatch at seq ${wire.seq}`)
-    this.snapshot.log.push(wire)
-  }
-
-  private persist(): void {
-    if (!this.snapshot) return
-    saveGame(this.room, this.clientId, { snapshot: this.snapshot, seat: this.seat, chat: this.chat })
   }
 }

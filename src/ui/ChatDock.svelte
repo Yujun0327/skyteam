@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ChatLine } from '../transport/types'
+  import type { ChatLine } from '../app/session.svelte'
   interface Props {
     lines: ChatLine[]
     open: boolean

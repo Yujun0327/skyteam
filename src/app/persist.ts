@@ -1,53 +1,33 @@
-import type { Seat } from '../engine'
-import type { ChatLine, GameSnapshot } from '../transport/types'
+import { loadPlayerName as load, playerKey as key, savePlayerName as save } from '@yujun/game-net'
+import type { ChatLine } from './session.svelte'
 
-/** Persistent identity: a UUID in localStorage. Reconnecting with the same key reclaims the seat. */
-export function playerKey(): string {
-  const KEY = 'skyteam:player-key'
-  let key = localStorage.getItem(KEY)
-  if (!key) {
-    key = crypto.randomUUID().replace(/-/g, '').slice(0, 16)
-    localStorage.setItem(KEY, key)
-  }
-  return key
-}
+/** Storage prefix and MQTT topic namespace for this game. */
+export const APP = 'skyteam'
 
-export function loadPlayerName(): string {
-  return localStorage.getItem('skyteam:player-name') ?? ''
-}
+/** Persistent identity per browser: the same key reclaims the same seat after a refresh. */
+export const playerKey = (): string => key(APP)
+export const loadPlayerName = (): string => load(APP)
+export const savePlayerName = (name: string): void => save(APP, name)
 
-export function savePlayerName(name: string): void {
-  localStorage.setItem('skyteam:player-name', name)
-}
+const chatKey = (room: string) => `${APP}:chat:${room.toUpperCase()}`
 
-export interface SavedGame {
-  snapshot: GameSnapshot
-  seat: Seat
-  chat: ChatLine[]
-}
-
-const roomKey = (room: string, key: string) => `skyteam:room:${room.toUpperCase()}:${key}`
-
-export function saveGame(room: string, key: string, data: SavedGame): void {
+export function saveChat(room: string, chat: ChatLine[]): void {
   try {
-    localStorage.setItem(roomKey(room, key), JSON.stringify(data))
+    localStorage.setItem(chatKey(room), JSON.stringify(chat))
   } catch {
-    /* storage full or blocked — the next beacon repairs instead */
+    /* storage full or blocked */
   }
 }
 
-export function loadGame(room: string, key: string): SavedGame | null {
+export function loadChat(room: string): ChatLine[] {
   try {
-    const raw = localStorage.getItem(roomKey(room, key))
-    return raw ? (JSON.parse(raw) as SavedGame) : null
+    const raw = localStorage.getItem(chatKey(room))
+    return raw ? (JSON.parse(raw) as ChatLine[]) : []
   } catch {
-    return null
+    return []
   }
 }
 
-export function clearGame(room: string, key: string): void {
-  localStorage.removeItem(roomKey(room, key))
-}
 
 /** Scenarios landed on this device (solo or online). */
 export function landedScenarios(): Set<string> {

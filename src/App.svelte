@@ -2,7 +2,7 @@
   import { loadPlayerName, playerKey } from './app/persist'
   import { OnlineSession, SoloSession } from './app/session.svelte'
   import type { AbilityId } from './engine'
-  import { makeRoomCode } from './transport/mqtt'
+  import { makeRoomCode } from '@yujun/game-net'
   import GameScreen from './ui/GameScreen.svelte'
   import Home from './ui/Home.svelte'
   import Lab from './ui/Lab.svelte'
