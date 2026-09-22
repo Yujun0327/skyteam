@@ -8,6 +8,7 @@ import {
   type GameAdapter,
   type Transport,
 } from '@yujun/game-net'
+import { WalletSession, defaultLedger, loadIdentity, type Identity as WalletIdentity, type Ledger, type LockState, type Payout } from '@yujun/game-net/wallet'
 import { APP, loadChat, recordLanding, saveChat } from './persist'
 
 export type SfxEvent =
@@ -220,7 +221,7 @@ function placeholderConfig(): GameConfig {
 function makeAdapter(host: () => OnlineSession | null): GameAdapter<GameConfig, GameState, Move> {
   return {
     app: APP,
-    protocol: 2,
+    protocol: 3,
     rulesVersion: String(RULES_VERSION),
     minSeats: 2,
     maxSeats: 2,
@@ -243,10 +244,13 @@ function makeAdapter(host: () => OnlineSession | null): GameAdapter<GameConfig, 
     hash: publicHash,
     actor: (s) => s.seatToAct,
     isOver: (s) => s.result !== null,
+    winners: (s) => (s.result?.outcome === 'landed' ? [0, 1] : []),
   }
 }
 
 export interface OnlineTestHooks {
+  ledger?: Ledger
+  identity?: WalletIdentity
   transport?: Transport<Beacon<GameConfig, Move>>
   now?: () => number
   timers?: boolean
@@ -262,6 +266,7 @@ export class OnlineSession extends BaseSession {
   pick = $state<LobbyPick>({ scenarioId: DEFAULT_SCENARIO, hostSeat: 0, abilities: [] })
 
   private readonly core: Core
+  private wallet: WalletSession<GameConfig, GameState, Move, undefined> | null = null
   /** Reactive revision (see toybattle history): `playing` must track something while false. */
   private rev = $state(0)
   private gameId = ''
@@ -295,6 +300,12 @@ export class OnlineSession extends BaseSession {
       this.pick = { scenarioId: core.snapshot.cfg.scenarioId, hostSeat: (core.snapshot.seats[core.myKey] ?? 0) as Seat, abilities: core.snapshot.cfg.abilities }
     }
     core.subscribe(() => this.sync())
+    // the platform wallet: locks stakes, signs and posts settlements, reports payouts
+    const ledger = test.ledger ?? (test.transport ? null : defaultLedger())
+    if (ledger) {
+      this.wallet = new WalletSession(core, APP, test.identity ?? loadIdentity(), ledger, test.now)
+      this.wallet.subscribe(() => this.rev++)
+    }
     core.setReady(true) // Sky Team has no ready ritual: the host presses start
     this.announce()
     if (core.started) queueMicrotask(() => this.autoRespond())
@@ -482,11 +493,27 @@ export class OnlineSession extends BaseSession {
     return this.core
   }
 
+  /** Wallet outcome of the current game (null when this build has no wallet). */
+  get payout(): Payout | null {
+    void this.rev
+    return this.wallet?.payout ?? null
+  }
+
+  get lockState(): LockState | null {
+    void this.rev
+    return this.wallet?.lock ?? null
+  }
+
+  get ledger(): Ledger | null {
+    return this.wallet ? (this.wallet as unknown as { ledger: Ledger }).ledger : null
+  }
+
   leave(): void {
     this.core.leave()
   }
 
   destroy(): void {
+    this.wallet?.destroy()
     this.core.destroy()
   }
 

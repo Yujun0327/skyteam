@@ -354,7 +354,7 @@
   </div>
 
   {#if vs.result}
-    <DebriefOverlay result={vs.result} state={vs} {scenario} canRematch={!online || online.isHost || true} rematchLabel={online && !online.isHost ? 'request another flight' : 'fly again'} onRematch={onRematch} onExit={onExit} />
+    <DebriefOverlay result={vs.result} state={vs} {scenario} payout={online?.payout ?? null} canRematch={!online || online.isHost || true} rematchLabel={online && !online.isHost ? 'request another flight' : 'fly again'} onRematch={onRematch} onExit={onExit} />
   {/if}
 
   {#if showRules}

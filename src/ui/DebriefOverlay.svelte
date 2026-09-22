@@ -1,4 +1,6 @@
 <script lang="ts">
+  import type { LockState, Payout } from '@yujun/game-net/wallet'
+  import PayoutLine from './PayoutLine.svelte'
   import type { GameResult, GameState } from '../engine'
   import type { Scenario } from '../data/types'
   interface Props {
@@ -7,10 +9,12 @@
     scenario: Scenario
     canRematch: boolean
     rematchLabel?: string
+    payout?: Payout | null
+    lock?: LockState | null
     onRematch: () => void
     onExit: () => void
   }
-  let { result, state, scenario, canRematch, rematchLabel = 'fly again', onRematch, onExit }: Props = $props()
+  let { result, state, scenario, canRematch, rematchLabel = 'fly again', payout = null, lock = null, onRematch, onExit }: Props = $props()
   const REASON: Record<string, string> = {
     spin: 'The aircraft entered a spin. Axis exceeded the limit.',
     collision: 'Mid-air collision with traffic on the approach.',
@@ -48,6 +52,7 @@
       <p class="label">Round {result.round}</p>
     {/if}
     <div class="actions">
+      <PayoutLine {payout} {lock} />
       {#if canRematch}<button class="btn--primary" onclick={onRematch}>{rematchLabel}</button>{/if}
       <button onclick={onExit}>exit cockpit</button>
     </div>

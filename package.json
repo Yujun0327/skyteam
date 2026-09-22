@@ -30,7 +30,7 @@
     "@fontsource/b612": "^5.2.8",
     "@fontsource/b612-mono": "^5.2.8",
     "@fontsource/michroma": "^5.2.8",
-    "@yujun/game-net": "github:Yujun0327/game-net#v0.2.1",
+    "@yujun/game-net": "github:Yujun0327/game-net#v0.3.0",
     "cannon-es": "^0.20.0",
     "three": "^0.182.0"
   }

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import WalletBadge from './WalletBadge.svelte'
   import { loadPlayerName, savePlayerName } from '../app/persist'
   import { DEFAULT_SCENARIO } from '../data'
   import type { AbilityId } from '../engine'
@@ -30,6 +31,7 @@
     <div class="ident">
       <h1>Sky Team</h1>
       <p class="tag label">Two seats · one aircraft · seven rounds · complete silence</p>
+      <WalletBadge />
     </div>
     <p class="lede">
       The Pilot and the Co-Pilot bring an airliner down through traffic, weather and fuel limits with nothing but their dice and
